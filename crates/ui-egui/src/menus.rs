@@ -77,6 +77,9 @@ pub const UI_COMMANDS: &[(&str, &str, &[&str], Option<&str>)] = &[
     ("window.nextDocument", "Next Document", &[], Some("Ctrl+Tab")),
     ("window.previousDocument", "Previous Document", &[], Some("Ctrl+Shift+Tab")),
     ("window.theme.toggle", "Next Appearance Mode", &["Window"], None),
+    // Suíte FisiLab themes first (UFRGS Noite is the default).
+    ("window.theme.ufrgsNoite", "Tema UFRGS Noite", &["Window", "Theme"], None),
+    ("window.theme.ufrgsDia", "Tema UFRGS Dia", &["Window", "Theme"], None),
     ("window.theme.pro", "Pro Theme", &["Window", "Theme"], None),
     ("window.theme.proMedium", "Pro Medium Gray Theme", &["Window", "Theme"], None),
     ("window.theme.proLightGray", "Pro Light Gray Theme", &["Window", "Theme"], None),
@@ -93,13 +96,14 @@ pub const UI_COMMANDS: &[(&str, &str, &[&str], Option<&str>)] = &[
     ("window.theme.softDark", "Soft Dark Theme", &["Window", "Theme"], None),
     ("window.theme.system", "Sync with system", &["Window", "Theme"], None),
     ("edit.search", "Search…", &["Edit"], Some("Cmd+F")),
-    ("help.discord", "Join the ArtCraft Discord…", &["Help"], None),
-    ("help.website", "PhotoCraft Website", &["Help"], None),
-    ("help.artcraftWebsite", "ArtCraft Website", &["Help"], None),
-    ("help.github", "PhotoCraft on GitHub", &["Help"], None),
-    ("help.reportIssue", "Report an Issue…", &["Help"], None),
+    // Suíte FisiLab links (`links::COMMANDS`); upstream's Discord and ArtCraft website items are gone.
+    ("help.website", "Site da Suíte FisiLab", &["Help"], None),
+    ("help.manifesto", "Manifesto pelas tecnologias livres", &["Help"], None),
+    ("help.github", "Projeto original (PhotoCraft)", &["Help"], None),
+    ("help.reportIssue", "Reportar um problema…", &["Help"], None),
     ("help.systemInfo", "System Info…", &["Help"], None),
-    ("help.about", "About PhotoCraft", &["Help"], None),
+    ("help.fisilab", fisilab_brand::ABOUT_MENU_LABEL, &["Help"], None),
+    ("help.about", "About FisiFoto", &["Help"], None),
 ];
 
 /// Window › <document>: the open documents, listed at the end of the Window menu as in Photoshop.
@@ -189,7 +193,7 @@ pub(crate) fn invoke_unguarded(app: &mut PhotocraftApp, ctx: &egui::Context, id:
     if let Some(result) = crate::panel_docking::command(app, id, &params) {
         return result;
     }
-    // Help › Discord, website, GitHub, Report an Issue.
+    // Help › Suíte FisiLab links: the suite site, the manifesto, the original project, issues.
     if let Some(url) = crate::links::url_for(id) {
         return Ok(crate::links::open(app, ctx, url));
     }
@@ -379,7 +383,9 @@ pub(crate) fn invoke_unguarded(app: &mut PhotocraftApp, ctx: &egui::Context, id:
             crate::prefs_ui::sync_appearance(app, ctx);
             Ok(Value::Null)
         }
-        "window.theme.pro"
+        "window.theme.ufrgsNoite"
+        | "window.theme.ufrgsDia"
+        | "window.theme.pro"
         | "window.theme.proMedium"
         | "window.theme.proLightGray"
         | "window.theme.proLight"
@@ -410,6 +416,11 @@ pub(crate) fn invoke_unguarded(app: &mut PhotocraftApp, ctx: &egui::Context, id:
             Ok(Value::Null)
         }
         "help.about" => Ok(json!({"dialog": app.ui.open_dialog(DialogKind::About, Default::default())})),
+        // Suíte FisiLab: the suite's About window (drawn by `fisilab_brand::frame`).
+        "help.fisilab" => {
+            fisilab_brand::about::open(ctx);
+            Ok(Value::Null)
+        }
         "help.systemInfo" => {
             let mut fields = serde_json::Map::new();
             fields.insert("systemInfo".into(), json!(true));
@@ -745,7 +756,7 @@ pub fn is_enabled(app: &PhotocraftApp, id: &str) -> bool {
     match id {
         "window.panel.activate" | "window.panel.layout" => true,
         "window.panel.group" | "window.panel.move" | "window.panel.float" | "window.panel.dock" | "window.panel.close" => !app.session.prefs().workspace_locked,
-        "file.open" | "file.exit" | "file.clearRecent" | "file.removeRecent" | "help.about" | "help.systemInfo" | "edit.search" => true,
+        "file.open" | "file.exit" | "file.clearRecent" | "file.removeRecent" | "help.about" | "help.fisilab" | "help.systemInfo" | "edit.search" => true,
         i if i.starts_with("file.openRecent.") => true,
         i if i.starts_with(DOCUMENT_ITEM) => true,
         i if crate::links::url_for(i).is_some() => true,
@@ -1852,7 +1863,7 @@ mod tests {
                 }
                 h.run_steps(3);
             };
-            let open = |h: &Harness<'_, PhotocraftApp>| h.query_by_label_contains("About PhotoCraft").is_some();
+            let open = |h: &Harness<'_, PhotocraftApp>| h.query_by_label_contains("About FisiFoto").is_some();
             let field_id = egui::Id::new("help-menu-search").with("field");
             let help = h.get_by_label("Help").rect().center();
             click(&mut h, help);

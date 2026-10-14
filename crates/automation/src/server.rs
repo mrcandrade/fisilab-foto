@@ -308,7 +308,7 @@ pub struct MenuParams {
 pub struct UiSetParams {
     /// Fields for the control method `ui.set`: tool, panels, dock, dockTabs, dockWidth, colorPanel
     /// ({background: bool} picks which swatch the Color panel edits), maskTarget,
-    /// vectorMaskTarget, selectionMode, zoom, center, rotation (view angle in degrees), fit, theme (pro, proMedium, studio,
+    /// vectorMaskTarget, selectionMode, zoom, center, rotation (view angle in degrees), fit, theme (ufrgsNoite, ufrgsDia, pro, proMedium, studio,
     /// studioLight, classic, solarizedDark, adwaita, adwaitaDark, breezeLight, breezeDark, softLight, softDark), brushSection, brushTab,
     /// brushesView, brushPicker ([x, y] opens the Brush Preset picker there, null closes it),
     /// brushPickerName, brushPickerStroke, brushPickerTip (the picker card's parts, at least one
@@ -447,8 +447,8 @@ fn to_result(r: Result<Value, AutomationError>) -> Result<CallToolResult, McpErr
 fn bridge_only(name: &str) -> Result<CallToolResult, McpError> {
     Ok(fail(format!(
         "`{name}` drives the live GUI and needs bridge mode: start the app with \
-         `photocraft --control <port> --control-token-file <path>`, then run \
-         `photocraft-cli mcp --bridge 127.0.0.1:<port> --control-token-file <path>`"
+         `fisifoto --control <port> --control-token-file <path>`, then run \
+         `fisifoto-cli mcp --bridge 127.0.0.1:<port> --control-token-file <path>`"
     )))
 }
 

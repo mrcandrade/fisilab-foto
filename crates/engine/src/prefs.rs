@@ -55,10 +55,10 @@ choice!(TypeUnit { Points = "points", Pixels = "pixels", Millimeters = "mm" } de
 choice!(PointSize { PostScript = "postScript", Traditional = "traditional" } default PostScript);
 choice!(Interpolation { BicubicAutomatic = "bicubicAutomatic", Nearest = "nearestNeighbor", Bilinear = "bilinear", Bicubic = "bicubic", BicubicSmoother = "bicubicSmoother", BicubicSharper = "bicubicSharper", PreserveDetails = "preserveDetails" } default BicubicAutomatic);
 choice!(ColorPicker { Adobe = "adobe", System = "system" } default Adobe);
-choice!(Theme { Pro = "pro", ProMedium = "proMedium", ProLightGray = "proLightGray", ProLight = "proLight", Studio = "studio", StudioLight = "studioLight", Classic = "classic", SolarizedDark = "solarizedDark", Adwaita = "adwaita", AdwaitaDark = "adwaitaDark", BreezeLight = "breezeLight", BreezeDark = "breezeDark", SoftDark = "softDark", SoftLight = "softLight" } default ProMedium);
+choice!(Theme { UfrgsNoite = "ufrgsNoite", UfrgsDia = "ufrgsDia", Pro = "pro", ProMedium = "proMedium", ProLightGray = "proLightGray", ProLight = "proLight", Studio = "studio", StudioLight = "studioLight", Classic = "classic", SolarizedDark = "solarizedDark", Adwaita = "adwaita", AdwaitaDark = "adwaitaDark", BreezeLight = "breezeLight", BreezeDark = "breezeDark", SoftDark = "softDark", SoftLight = "softLight" } default UfrgsNoite);
 choice!(AppearanceMode { Auto = "auto", Dark = "dark", Light = "light" } default Dark);
-choice!(DarkTheme { Pro = "pro", ProMedium = "proMedium", Studio = "studio", SolarizedDark = "solarizedDark", AdwaitaDark = "adwaitaDark", BreezeDark = "breezeDark", SoftDark = "softDark" } default ProMedium);
-choice!(LightTheme { ProLight = "proLight", ProLightGray = "proLightGray", StudioLight = "studioLight", Classic = "classic", Adwaita = "adwaita", BreezeLight = "breezeLight", SoftLight = "softLight" } default ProLight);
+choice!(DarkTheme { UfrgsNoite = "ufrgsNoite", Pro = "pro", ProMedium = "proMedium", Studio = "studio", SolarizedDark = "solarizedDark", AdwaitaDark = "adwaitaDark", BreezeDark = "breezeDark", SoftDark = "softDark" } default UfrgsNoite);
+choice!(LightTheme { UfrgsDia = "ufrgsDia", ProLight = "proLight", ProLightGray = "proLightGray", StudioLight = "studioLight", Classic = "classic", Adwaita = "adwaita", BreezeLight = "breezeLight", SoftLight = "softLight" } default UfrgsDia);
 choice!(CanvasColor { Default = "default", Black = "black", DarkGray = "darkGray", MediumGray = "mediumGray", LightGray = "lightGray", Custom = "custom" } default Default);
 choice!(CanvasBorder { DropShadow = "dropShadow", Line = "line", None = "none" } default DropShadow);
 choice!(UiScale { Auto = "auto", P75 = "75", P80 = "80", P85 = "85", P90 = "90", P95 = "95", P100 = "100", P125 = "125", P150 = "150", P175 = "175", P200 = "200", P250 = "250", P300 = "300" } default Auto);
@@ -290,10 +290,11 @@ pub struct Interface {
 impl Default for Interface {
     fn default() -> Self {
         Self {
-            theme: Theme::ProMedium,
+            // Suíte FisiLab: UFRGS Noite by default, UFRGS Dia for the light appearance.
+            theme: Theme::UfrgsNoite,
             appearance_mode: AppearanceMode::Dark,
-            dark_theme: DarkTheme::ProMedium,
-            light_theme: LightTheme::ProLight,
+            dark_theme: DarkTheme::UfrgsNoite,
+            light_theme: LightTheme::UfrgsDia,
             favorite_themes: Vec::new(),
             canvas_color: CanvasColor::Default,
             canvas_custom_color: "#282828".into(),
@@ -1545,12 +1546,22 @@ impl Session {
             && let Some(theme) = interface.get("theme").and_then(Value::as_str).and_then(Theme::parse)
         {
             let (mode, slot) = match theme {
-                Theme::Pro | Theme::ProMedium | Theme::Studio | Theme::SolarizedDark | Theme::AdwaitaDark | Theme::BreezeDark | Theme::SoftDark => {
-                    ("dark", "darkTheme")
-                }
-                Theme::StudioLight | Theme::ProLightGray | Theme::ProLight | Theme::Classic | Theme::Adwaita | Theme::BreezeLight | Theme::SoftLight => {
-                    ("light", "lightTheme")
-                }
+                Theme::UfrgsNoite
+                | Theme::Pro
+                | Theme::ProMedium
+                | Theme::Studio
+                | Theme::SolarizedDark
+                | Theme::AdwaitaDark
+                | Theme::BreezeDark
+                | Theme::SoftDark => ("dark", "darkTheme"),
+                Theme::UfrgsDia
+                | Theme::StudioLight
+                | Theme::ProLightGray
+                | Theme::ProLight
+                | Theme::Classic
+                | Theme::Adwaita
+                | Theme::BreezeLight
+                | Theme::SoftLight => ("light", "lightTheme"),
             };
             interface.insert("appearanceMode".into(), json!(mode));
             // A partially migrated file may already contain a newer theme selection (#5139).
@@ -1626,6 +1637,14 @@ impl Session {
         // select a visible theme.
         if path == "interface.theme" || next.interface.theme != self.prefs().interface.theme {
             match next.interface.theme {
+                Theme::UfrgsNoite => {
+                    next.interface.dark_theme = DarkTheme::UfrgsNoite;
+                    next.interface.appearance_mode = AppearanceMode::Dark;
+                }
+                Theme::UfrgsDia => {
+                    next.interface.light_theme = LightTheme::UfrgsDia;
+                    next.interface.appearance_mode = AppearanceMode::Light;
+                }
                 Theme::Pro => {
                     next.interface.dark_theme = DarkTheme::Pro;
                     next.interface.appearance_mode = AppearanceMode::Dark;

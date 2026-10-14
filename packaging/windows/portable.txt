@@ -1,9 +1,10 @@
-PhotoCraft portable mode
+FisiFoto — modo portátil (Suíte FisiLab)
 
-While this file sits next to photocraft.exe, PhotoCraft keeps its preferences, brush presets,
-crash-recovery autosaves and startup state in the PhotoCraftData folder beside it, and writes
-nothing to %APPDATA%. Copy the whole folder to move PhotoCraft with its settings.
+Enquanto este arquivo estiver ao lado de fisifoto.exe, o FisiFoto guarda as preferências, as
+predefinições de pincel, os salvamentos automáticos de recuperação e o estado de inicialização na
+pasta FisiFotoData ao lado dele, e não grava nada em %APPDATA%. Copie a pasta inteira para levar o
+FisiFoto com as suas configurações.
 
-Delete this file to use the normal per-user settings folder (%APPDATA%\Photocraft) instead.
-If PhotoCraftData can't be written (for example on a read-only drive), PhotoCraft says so and
-uses %APPDATA%\Photocraft instead.
+Apague este arquivo para usar a pasta normal de configurações do usuário
+(%APPDATA%\FisiLab\FisiFoto). Se a pasta FisiFotoData não puder ser gravada (por exemplo, num
+pendrive somente leitura), o FisiFoto avisa e usa %APPDATA%\FisiLab\FisiFoto.

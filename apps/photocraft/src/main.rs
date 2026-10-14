@@ -1,6 +1,6 @@
-//! Photocraft desktop app.
+//! FisiFoto desktop app (Suíte FisiLab — FisiLab, LARFIC · UFRGS; based on PhotoCraft).
 //!
-//! Usage: `photocraft [--control <port>] [--control-token <64-hex> |
+//! Usage: `fisifoto [--control <port>] [--control-token <64-hex> |
 //! --control-token-file <path>] [--automation-read-root <dir>]
 //! [--automation-write-root <dir>] [--safe-gpu] [--in-window-menus] [files…]`
 //!
@@ -55,8 +55,13 @@ mod window_frame;
 use photocraft_engine::Session;
 use photocraft_ui_egui::PhotocraftApp;
 
-/// Matches the `.desktop` file and hicolor icon name, so Wayland docks pick up the icon.
-const APP_ID: &str = "ai.storyteller.photocraft";
+/// Matches the `.desktop` file's window class, so Wayland docks pick up the icon. Suíte FisiLab:
+/// its own id, so FisiFoto never collides with an installed PhotoCraft (upstream:
+/// `ai.storyteller.photocraft`).
+const APP_ID: &str = "br.ufrgs.fisilab.fisifoto";
+
+/// The product name in the window title, the taskbar and eframe's app name.
+const APP_NAME: &str = "FisiFoto";
 
 /// Windows and Linux: no OS title bar; the app's top bar is the title bar, with its own caption
 /// buttons and edge resizing (`photocraft_ui_egui::titlebar`), as Photoshop does on Windows. macOS
@@ -82,7 +87,7 @@ fn native_options(custom_titlebar: bool) -> eframe::NativeOptions {
         viewport: egui::ViewportBuilder::default()
             .with_icon(app_icon::window_icon())
             .with_app_id(APP_ID)
-            .with_title("PhotoCraft")
+            .with_title(APP_NAME)
             .with_inner_size([1440.0, 900.0])
             .with_min_inner_size([760.0, 480.0])
             .with_drag_and_drop(true)
@@ -211,7 +216,7 @@ fn main() -> eframe::Result {
             Some("--safe-gpu") => safe_gpu = true,
             Some("--in-window-menus") => in_window_menus = true,
             Some("--version") => {
-                println!("photocraft {}", photocraft_engine::build_info::long_version());
+                println!("fisifoto {}", photocraft_engine::build_info::long_version());
                 return Ok(());
             }
             // Old macOS passes a process serial number when launched from Finder.
@@ -226,7 +231,7 @@ fn main() -> eframe::Result {
     // Exit status 2 is the usual command-line usage error, so a launcher sees the failure.
     if let Some(code) = control_args_exit_code(&control_arg_errors) {
         for error in &control_arg_errors {
-            eprintln!("photocraft: {error}");
+            eprintln!("fisifoto: {error}");
         }
         std::process::exit(code);
     }
@@ -235,7 +240,7 @@ fn main() -> eframe::Result {
     // and usage errors leave no file behind. Records logged until now are written to it first.
     if let (Some(logger), Some(dir)) = (logger, services::config_dir()) {
         match logger.attach_dir(&dir.join("logs")) {
-            Ok(path) => log::info!("PhotoCraft {}, log file {}", photocraft_engine::build_info::long_version(), path.display()),
+            Ok(path) => log::info!("FisiFoto {}, log file {}", photocraft_engine::build_info::long_version(), path.display()),
             // Standard error only by now (`attach_dir` gave up on the file); unlike `eprintln!`, never panics.
             Err(e) => log::warn!("no log file: {e}"),
         }
@@ -256,7 +261,7 @@ fn main() -> eframe::Result {
         && std::env::var_os("DISPLAY").is_some_and(|d| !d.is_empty())
         && linux_libs::available(linux_libs::DisplaySession::X11)
     {
-        eprintln!("photocraft: opening the window through Xwayland (Preferences › Performance › Linux display server)");
+        eprintln!("fisifoto: opening the window through Xwayland (Preferences › Performance › Linux display server)");
         linux_libs::DisplaySession::X11
     } else {
         session
@@ -275,21 +280,21 @@ fn main() -> eframe::Result {
         let token = match photocraft_automation::security::server_token(supplied.as_deref(), token_file.as_deref()) {
             Ok(token) => token,
             Err(e) => {
-                eprintln!("photocraft: cannot configure control authentication: {e}");
+                eprintln!("fisifoto: cannot configure control authentication: {e}");
                 std::process::exit(2);
             }
         };
         if let Some(path) = token_file {
-            eprintln!("photocraft: control token file: {}", path.display());
+            eprintln!("fisifoto: control token file: {}", path.display());
         } else if supplied.is_none() {
-            eprintln!("photocraft: control token: {token}");
+            eprintln!("fisifoto: control token: {token}");
         } else {
-            eprintln!("photocraft: using supplied control token");
+            eprintln!("fisifoto: using supplied control token");
         }
         let workspace = match photocraft_automation::AuthorizedWorkspace::new(automation_read_root.as_deref(), automation_write_root.as_deref()) {
             Ok(workspace) => workspace,
             Err(error) => {
-                eprintln!("photocraft: cannot configure automation workspace: {error}");
+                eprintln!("fisifoto: cannot configure automation workspace: {error}");
                 std::process::exit(2);
             }
         };
@@ -369,8 +374,11 @@ fn main() -> eframe::Result {
     let app_created = std::sync::Arc::new(std::sync::atomic::AtomicBool::new(false));
     let created_in_callback = app_created.clone();
     let started_sentinel = sentinel.clone();
+    // Suíte FisiLab: the CTA splash plays over the first frames (`fisilab_brand::frame`, called by
+    // the UI every frame); `FISILAB_NO_SPLASH=1` turns it off.
+    fisilab_brand::splash::enable();
     let result = eframe::run_native(
-        "PhotoCraft",
+        APP_NAME,
         options,
         Box::new(move |cc| {
             created_in_callback.store(true, std::sync::atomic::Ordering::Relaxed);
@@ -505,7 +513,7 @@ fn main() -> eframe::Result {
             }
             #[cfg(target_os = "linux")]
             tablet::spawn_x11(&app.stylus.feed, display);
-            // Paths on the command line (Linux/Windows file associations, `photocraft a.psd`).
+            // Paths on the command line (Linux/Windows file associations, `fisifoto a.psd`).
             app.open_paths(&files);
             if !unreadable_paths.is_empty() {
                 use photocraft_ui_egui::i18n;
@@ -645,7 +653,7 @@ mod tests {
             .with_fullscreen(true)
             .with_maximized(true);
         let opened = hook(saved);
-        assert_eq!(opened.fullscreen, Some(false), "Standard Screen Mode is where PhotoCraft starts");
+        assert_eq!(opened.fullscreen, Some(false), "Standard Screen Mode is where FisiFoto starts");
         assert_eq!(opened.maximized, Some(true), "the rest of the saved geometry is kept");
         assert_eq!(opened.inner_size, Some(egui::vec2(2560.0, 1392.0)));
     }

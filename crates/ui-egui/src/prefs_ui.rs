@@ -91,6 +91,7 @@ fn selected_theme(interface: &prefs::Interface, system: Option<egui::Theme>) -> 
     };
     if light {
         match interface.light_theme {
+            LightTheme::UfrgsDia => ThemeKind::UfrgsDia,
             LightTheme::StudioLight => ThemeKind::StudioLight,
             LightTheme::ProLightGray => ThemeKind::ProLightGray,
             LightTheme::ProLight => ThemeKind::ProLight,
@@ -101,6 +102,7 @@ fn selected_theme(interface: &prefs::Interface, system: Option<egui::Theme>) -> 
         }
     } else {
         match interface.dark_theme {
+            DarkTheme::UfrgsNoite => ThemeKind::UfrgsNoite,
             DarkTheme::Pro => ThemeKind::Pro,
             DarkTheme::ProMedium => ThemeKind::ProMedium,
             DarkTheme::Studio => ThemeKind::Studio,
@@ -129,6 +131,7 @@ pub(crate) fn cycle_appearance(app: &mut PhotocraftApp, ctx: &egui::Context) {
 }
 
 const LIGHT_THEME_OPTIONS: &[(&str, ThemeKind)] = &[
+    ("ufrgsDia", ThemeKind::UfrgsDia),
     ("proLight", ThemeKind::ProLight),
     ("proLightGray", ThemeKind::ProLightGray),
     ("studioLight", ThemeKind::StudioLight),
@@ -138,6 +141,7 @@ const LIGHT_THEME_OPTIONS: &[(&str, ThemeKind)] = &[
     ("softLight", ThemeKind::SoftLight),
 ];
 const DARK_THEME_OPTIONS: &[(&str, ThemeKind)] = &[
+    ("ufrgsNoite", ThemeKind::UfrgsNoite),
     ("proMedium", ThemeKind::ProMedium),
     ("pro", ThemeKind::Pro),
     ("studio", ThemeKind::Studio),
@@ -510,7 +514,7 @@ fn persist(app: &mut PhotocraftApp, now: f64) -> Option<f64> {
                 app.ui.status = crate::i18n::fmt(tl!(template), &[("error", &e)]);
                 app.ui.status_error = true;
             } else if failures == SAVE_NOTICE_AFTER {
-                let lines = vec![e, "PhotoCraft keeps retrying; until a save succeeds, preference changes are lost when it closes.".into()];
+                let lines = vec![e, "FisiFoto keeps retrying; until a save succeeds, preference changes are lost when it closes.".into()];
                 let id = crate::notices::post(app, "Preferences can't be saved", lines, true, None);
                 app.prefs_rt.save_retry.notice = Some(id);
             }
@@ -1058,6 +1062,8 @@ fn humanize(key: &str) -> String {
 
 fn choice_label(v: &str) -> String {
     match v {
+        "ufrgsNoite" => "UFRGS Noite".into(),
+        "ufrgsDia" => "UFRGS Dia".into(),
         "cm" => "Centimeters".into(),
         "mm" => "Millimeters".into(),
         "75" | "80" | "85" | "90" | "95" | "100" | "125" | "150" | "175" | "200" | "250" | "300" => format!("{v}%"),
@@ -1188,7 +1194,7 @@ fn prefs_body(ui: &mut egui::Ui, f: &mut Map<String, Value>, system: Option<egui
                     f.get("__order").and_then(|o| o.get(&section)).and_then(|v| serde_json::from_value(v.clone()).ok()).unwrap_or_default();
                 if !has_visible_fields(&values, &section) {
                     ui.add_space(4.0);
-                    ui.label(RichText::new(tl!("These settings aren't available in PhotoCraft yet.")).color(t.text_faint));
+                    ui.label(RichText::new(tl!("These settings aren't available in FisiFoto yet.")).color(t.text_faint));
                 } else if let Some(obj) = values.get_mut(&section).and_then(Value::as_object_mut) {
                     section_fields(ui, &section, obj, &order, lang, system, filter);
                     if section == "fileHandling" {
@@ -1390,8 +1396,8 @@ fn appearance_rows(ui: &mut egui::Ui, obj: &mut Map<String, Value>, system: Opti
     }
     let light_active = mode == "light" || (mode == "auto" && system == Some(egui::Theme::Light));
     obj.insert("appearanceMode".into(), json!(mode));
-    let mut light = obj.get("lightTheme").and_then(Value::as_str).unwrap_or("studioLight").to_string();
-    let mut dark = obj.get("darkTheme").and_then(Value::as_str).unwrap_or("proMedium").to_string();
+    let mut light = obj.get("lightTheme").and_then(Value::as_str).unwrap_or("ufrgsDia").to_string();
+    let mut dark = obj.get("darkTheme").and_then(Value::as_str).unwrap_or("ufrgsNoite").to_string();
     let mut favorites: Vec<SavedTheme> = obj.get("favoriteThemes").cloned().and_then(|v| serde_json::from_value(v).ok()).unwrap_or_default();
     if rows.light {
         theme_row(ui, "Light Theme", light_active, &mut light, &mut favorites, LIGHT_THEME_OPTIONS);
@@ -1790,7 +1796,7 @@ fn shortcuts_body(app: &mut PhotocraftApp, ui: &mut egui::Ui, f: &mut Map<String
             }
             if ui.button(tl!("Reset All to Defaults")).clicked() {
                 overrides.clear();
-                message = tl!("All shortcuts reset to PhotoCraft defaults.").into();
+                message = tl!("All shortcuts reset to FisiFoto defaults.").into();
                 message_warning = false;
             }
             // A Photoshop set (`.kys`) fills the overrides; the file arrives after this frame
@@ -2105,8 +2111,8 @@ mod tests {
     #[test]
     fn appearance_resolves_both_saved_themes_and_follows_system() {
         let mut interface = prefs::Interface { appearance_mode: AppearanceMode::Auto, ..prefs::Interface::default() };
-        assert_eq!(selected_theme(&interface, Some(egui::Theme::Dark)), ThemeKind::ProMedium);
-        assert_eq!(selected_theme(&interface, Some(egui::Theme::Light)), ThemeKind::ProLight);
+        assert_eq!(selected_theme(&interface, Some(egui::Theme::Dark)), ThemeKind::UfrgsNoite);
+        assert_eq!(selected_theme(&interface, Some(egui::Theme::Light)), ThemeKind::UfrgsDia);
         interface.dark_theme = DarkTheme::Studio;
         interface.light_theme = LightTheme::Classic;
         assert_eq!(selected_theme(&interface, Some(egui::Theme::Dark)), ThemeKind::Studio);
@@ -2147,7 +2153,7 @@ mod tests {
         app.run("prefs.set", json!({"path": "interface.appearanceMode", "value": "auto"})).unwrap();
         let ctx = egui::Context::default();
         tick(&mut app, &ctx);
-        assert_eq!(app.ui.theme, ThemeKind::ProLight);
+        assert_eq!(app.ui.theme, ThemeKind::UfrgsDia);
     }
 
     #[test]
@@ -2234,7 +2240,9 @@ mod tests {
         let (mut app, store) = app_with_store();
         let ctx = egui::Context::default();
         PhotocraftApp::setup_context(&ctx, Default::default());
-        for kind in ThemeKind::ALL {
+        // The default theme (UFRGS Noite) comes first in ALL, and choosing the theme already in
+        // effect saves nothing: start from the far end so every step changes the saved prefs.
+        for kind in ThemeKind::ALL.into_iter().rev() {
             app.run("prefs.set", json!({"path": "interface.theme", "value": kind.id()})).unwrap();
             appearance_frame(&mut app, &ctx, Some(egui::Theme::Dark));
             let interface = app.session.prefs().interface.clone();
@@ -2260,15 +2268,15 @@ mod tests {
         ctx.set_theme(egui::ThemePreference::Dark);
         assert_eq!(ctx.options(|o| o.theme_preference), egui::ThemePreference::Dark);
         appearance_frame(&mut app, &ctx, Some(egui::Theme::Light));
-        assert_palette(&ctx, ThemeKind::ProLight);
+        assert_palette(&ctx, ThemeKind::UfrgsDia);
         assert_eq!(app.session.prefs().interface.appearance_mode, AppearanceMode::Auto);
         // A restored pin must also clear when the concrete PhotoCraft palette stays the same.
         ctx.set_theme(egui::ThemePreference::Dark);
         appearance_frame(&mut app, &ctx, Some(egui::Theme::Light));
         assert_eq!(ctx.options(|o| o.theme_preference), egui::ThemePreference::System);
-        assert_palette(&ctx, ThemeKind::ProLight);
+        assert_palette(&ctx, ThemeKind::UfrgsDia);
         appearance_frame(&mut app, &ctx, Some(egui::Theme::Dark));
-        assert_palette(&ctx, ThemeKind::ProMedium);
+        assert_palette(&ctx, ThemeKind::UfrgsNoite);
         assert_eq!(app.session.prefs().interface.appearance_mode, AppearanceMode::Auto);
     }
 

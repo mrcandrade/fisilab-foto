@@ -194,7 +194,7 @@ fn block_on<T>(future: impl Future<Output = T>) -> T {
     }
 }
 
-/// Per-user settings directory: `PHOTOCRAFT_CONFIG_DIR`, else `<exe dir>/PhotoCraftData` in
+/// Per-user settings directory: `PHOTOCRAFT_CONFIG_DIR`, else `<exe dir>/FisiFotoData` in
 /// portable mode, else the platform convention. Everything the app persists lives under it; see
 /// [`crate::app_dirs`].
 pub fn config_dir() -> Option<PathBuf> {
@@ -203,6 +203,22 @@ pub fn config_dir() -> Option<PathBuf> {
 
 pub fn prefs_file() -> Option<PathBuf> {
     config_dir().map(|d| d.join("preferences.json"))
+}
+
+/// Suíte FisiLab: what a fresh install starts with (no preferences file yet): the interface in
+/// Brazilian Portuguese. Everything else keeps its default, and a saved file keeps whatever
+/// language it chose, `auto` (follow the system) included.
+pub const FIRST_RUN_PREFS: &str = r#"{"interface":{"language":"pt-br"}}"#;
+
+/// The saved preferences, or [`FIRST_RUN_PREFS`] when there is no file yet (or no settings
+/// directory at all). A file that exists but can't be read keeps the defaults, as upstream did.
+pub fn load_prefs_text(file: Option<&Path>) -> Option<String> {
+    let Some(file) = file else { return Some(FIRST_RUN_PREFS.to_string()) };
+    match std::fs::read_to_string(file) {
+        Ok(text) => Some(text),
+        Err(e) if e.kind() == std::io::ErrorKind::NotFound => Some(FIRST_RUN_PREFS.to_string()),
+        Err(_) => None,
+    }
 }
 
 /// The brush preset store (one file per preset group plus tip bitmaps; see
@@ -387,14 +403,14 @@ fn image_from_offers(offers: &[String], mut fetch: impl FnMut(&str) -> Option<Ve
 
 /// The shell command that starts this install under XWayland, where winit delivers file drops
 /// (winit 0.30 has none on Wayland, #386). A Flatpak gets the X11 socket only without the Wayland
-/// one, an AppImage relaunches by its own path, and anything else is `photocraft` on the PATH.
+/// one, an AppImage relaunches by its own path, and anything else is `fisifoto` on the PATH.
 /// `None` outside Flatpak when there is no X server (`DISPLAY` unset) to run on.
 #[cfg(any(target_os = "linux", test))]
 pub fn xwayland_command(flatpak_id: Option<&str>, appimage: Option<&str>, x_display: bool) -> Option<String> {
     if let Some(id) = flatpak_id.filter(|id| !id.is_empty()) {
         return Some(format!("flatpak run --nosocket=wayland --socket=x11 {}", shell_word(id)));
     }
-    let exe = appimage.filter(|path| !path.is_empty()).map_or_else(|| "photocraft".to_string(), shell_word);
+    let exe = appimage.filter(|path| !path.is_empty()).map_or_else(|| "fisifoto".to_string(), shell_word);
     x_display.then(|| format!("WAYLAND_DISPLAY= {exe}"))
 }
 
@@ -494,7 +510,7 @@ pub fn native(automation: Option<photocraft_automation::AuthorizedWorkspace>) ->
                 None
             })
         }),
-        load_prefs: Some(Box::new(|| std::fs::read_to_string(prefs_file()?).ok())),
+        load_prefs: Some(Box::new(|| load_prefs_text(prefs_file().as_deref()))),
         photoshop_shortcuts: Some(Box::new(|| crate::photoshop_settings::live_keyboard_shortcuts(&|k| std::env::var_os(k)))),
         save_prefs: Some(Box::new(|text: &str| write_atomic(&prefs_file().ok_or("no config directory")?, text.as_bytes()))),
         system_theme: crate::appearance::service(),
@@ -639,6 +655,30 @@ mod tests {
         assert_eq!(open_filters().into_iter().find(|(name, _)| *name == "SVG").map(|(_, exts)| exts), Some(vec!["svg".to_string(), "svgz".to_string()]));
     }
 
+    /// Suíte FisiLab: a fresh install opens in Brazilian Portuguese; a saved language (or `auto`)
+    /// is kept.
+    #[test]
+    fn a_fresh_install_starts_in_brazilian_portuguese() {
+        let dir = std::env::temp_dir().join(format!("fisifoto-first-run-{}", std::process::id()));
+        let _ = std::fs::remove_dir_all(&dir);
+        std::fs::create_dir_all(&dir).unwrap();
+        let file = dir.join("preferences.json");
+        for text in [load_prefs_text(Some(&file)), load_prefs_text(None)] {
+            let mut session = photocraft_engine::Session::new();
+            session.load_prefs_json(&text.unwrap()).unwrap();
+            assert_eq!(session.prefs().interface.language, "pt-br");
+            // Only the language: the theme stays the default (UFRGS Noite).
+            assert_eq!(session.prefs().interface.dark_theme, photocraft_engine::prefs::DarkTheme::UfrgsNoite);
+        }
+        for saved in ["auto", "en"] {
+            std::fs::write(&file, format!(r#"{{"interface":{{"language":"{saved}"}}}}"#)).unwrap();
+            let mut session = photocraft_engine::Session::new();
+            session.load_prefs_json(&load_prefs_text(Some(&file)).unwrap()).unwrap();
+            assert_eq!(session.prefs().interface.language, saved);
+        }
+        let _ = std::fs::remove_dir_all(&dir);
+    }
+
     #[test]
     fn xwayland_command_matches_how_photocraft_was_installed() {
         // Flatpak: WAYLAND_DISPLAY doesn't reach the sandbox's socket choice; flatpak's flags do.
@@ -650,8 +690,8 @@ mod tests {
         let bare = xwayland_command(None, Some("/opt/photocraft-0.3.0-linux-x86_64.AppImage"), true);
         assert_eq!(bare.as_deref(), Some("WAYLAND_DISPLAY= /opt/photocraft-0.3.0-linux-x86_64.AppImage"));
         // deb, rpm, AUR, tarball: the binary on the PATH.
-        assert_eq!(xwayland_command(None, None, true).as_deref(), Some("WAYLAND_DISPLAY= photocraft"));
-        assert_eq!(xwayland_command(Some(""), Some(""), true).as_deref(), Some("WAYLAND_DISPLAY= photocraft"));
+        assert_eq!(xwayland_command(None, None, true).as_deref(), Some("WAYLAND_DISPLAY= fisifoto"));
+        assert_eq!(xwayland_command(Some(""), Some(""), true).as_deref(), Some("WAYLAND_DISPLAY= fisifoto"));
         // No X server (XWayland disabled): nothing to suggest.
         assert_eq!(xwayland_command(None, Some("/opt/p.AppImage"), false), None);
     }

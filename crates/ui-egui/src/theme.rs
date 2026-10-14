@@ -1,5 +1,8 @@
 //! Design system: themes, colour tokens, radii, typography.
 //!
+//! - **UFRGS Noite** (default) and **UFRGS Dia**: the Suíte FisiLab themes (FisiLab — LARFIC ·
+//!   UFRGS), the Pro layout in the brand palette of `fisilab_brand::palette` (navy surfaces and the
+//!   flame red of the LARFIC logo at night; the cream of the logo's paper by day).
 //! - **Studio**: near-black surfaces, rounded cards, Inter + JetBrains Mono, soft violet
 //!   accent. Modelled on the look of modern pro editors (such as Photoshop 2025).
 //! - **Studio Light**: the same system on light surfaces.
@@ -25,10 +28,16 @@ use std::sync::Arc;
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
 pub enum ThemeKind {
+    /// Suíte FisiLab dark theme (the default): the Pro layout on the brand's navy surfaces, with the
+    /// flame red of the LARFIC logo as accent (`fisilab_brand::palette::NOITE`).
+    #[default]
+    UfrgsNoite,
+    /// Suíte FisiLab light theme: the Pro layout on the cream of the LARFIC logo
+    /// (`fisilab_brand::palette::DIA`).
+    UfrgsDia,
     /// Photoshop-style Spectrum dark: flat charcoal panels, tab strips, blue accents (darkest brightness).
     Pro,
-    /// Photoshop's default (second) interface brightness: #535353 panels, #282828 canvas (default).
-    #[default]
+    /// Photoshop's default (second) interface brightness: #535353 panels, #282828 canvas (upstream default).
     ProMedium,
     /// Photoshop's third interface brightness: #B8B8B8 panels (#2661).
     ProLightGray,
@@ -55,7 +64,9 @@ pub enum ThemeKind {
 }
 
 impl ThemeKind {
-    pub const ALL: [ThemeKind; 14] = [
+    pub const ALL: [ThemeKind; 16] = [
+        ThemeKind::UfrgsNoite,
+        ThemeKind::UfrgsDia,
         ThemeKind::Pro,
         ThemeKind::ProMedium,
         ThemeKind::ProLightGray,
@@ -73,6 +84,8 @@ impl ThemeKind {
     ];
     pub fn label(self) -> &'static str {
         match self {
+            ThemeKind::UfrgsNoite => "UFRGS Noite",
+            ThemeKind::UfrgsDia => "UFRGS Dia",
             ThemeKind::Pro => "Pro (Dark)",
             ThemeKind::ProMedium => "Pro (Medium Gray)",
             ThemeKind::ProLightGray => "Pro (Light Gray)",
@@ -93,6 +106,8 @@ impl ThemeKind {
     /// `window.theme.<id>`.
     pub fn id(self) -> &'static str {
         match self {
+            ThemeKind::UfrgsNoite => "ufrgsNoite",
+            ThemeKind::UfrgsDia => "ufrgsDia",
             ThemeKind::Pro => "pro",
             ThemeKind::ProMedium => "proMedium",
             ThemeKind::ProLightGray => "proLightGray",
@@ -109,9 +124,14 @@ impl ThemeKind {
             ThemeKind::SoftLight => "softLight",
         }
     }
-    /// Photoshop-grammar layout (tab strips, flat panels): the four Pro brightness levels.
+    /// Photoshop-grammar layout (tab strips, flat panels): the four Pro brightness levels and the
+    /// two UFRGS themes, which keep the layout of the upstream default (Pro Medium Gray).
     pub fn is_pro(self) -> bool {
-        matches!(self, ThemeKind::Pro | ThemeKind::ProMedium | ThemeKind::ProLightGray | ThemeKind::ProLight)
+        matches!(self, ThemeKind::UfrgsNoite | ThemeKind::UfrgsDia | ThemeKind::Pro | ThemeKind::ProMedium | ThemeKind::ProLightGray | ThemeKind::ProLight)
+    }
+    /// The Suíte FisiLab themes (brand palette).
+    pub fn is_ufrgs(self) -> bool {
+        matches!(self, ThemeKind::UfrgsNoite | ThemeKind::UfrgsDia)
     }
     pub fn next(self) -> Self {
         let i = Self::ALL.iter().position(|k| *k == self).unwrap_or(0);
@@ -119,6 +139,8 @@ impl ThemeKind {
     }
     pub fn from_name(s: &str) -> Option<Self> {
         match s.to_ascii_lowercase().replace([' ', '_', '-', '(', ')'], "").as_str() {
+            "ufrgsnoite" | "ufrgs" | "noite" | "fisilab" | "fisilabnoite" => Some(ThemeKind::UfrgsNoite),
+            "ufrgsdia" | "dia" | "fisilabdia" => Some(ThemeKind::UfrgsDia),
             "pro" | "prodark" | "photoshop" | "dark" => Some(ThemeKind::Pro),
             "promedium" | "promediumgray" | "medium" | "mediumgray" => Some(ThemeKind::ProMedium),
             "prolightgray" | "lightgray" | "mediumlight" => Some(ThemeKind::ProLightGray),
@@ -204,6 +226,8 @@ impl Tokens {
 
     pub fn for_kind(kind: ThemeKind) -> Self {
         match kind {
+            ThemeKind::UfrgsNoite => Tokens::ufrgs(kind, &fisilab_brand::palette::NOITE),
+            ThemeKind::UfrgsDia => Tokens::ufrgs(kind, &fisilab_brand::palette::DIA),
             // Sampled from Photoshop 2026's default brightness (raw display values).
             ThemeKind::ProMedium => Tokens {
                 kind,
@@ -745,6 +769,52 @@ impl Tokens {
         }
     }
 
+    /// The Suíte FisiLab themes: the brand tones (`fisilab_brand::palette`) mapped onto the roles of
+    /// the upstream default theme (Pro Medium Gray), whose layout flags, radii and scope levels are
+    /// kept so only the colours change. Translucent and derived colours (soft accent, shadow, scrim,
+    /// the dock between canvas and panels) are computed from the brand tones.
+    fn ufrgs(kind: ThemeKind, b: &fisilab_brand::palette::Tons) -> Self {
+        let layout = Tokens::for_kind(ThemeKind::ProMedium);
+        let dock = mix(b.fundo, b.painel, 0.5);
+        let shade = if b.escuro { b.fundo } else { b.texto };
+        Tokens {
+            kind,
+            chrome: b.painel,
+            canvas: b.fundo,
+            canvas_dot: b.fundo,
+            dock,
+            card: b.painel,
+            card_border: b.borda,
+            field: b.elevado,
+            field_border: b.borda,
+            hover: b.hover,
+            pressed: b.ativo,
+            text: b.texto,
+            text_dim: mix(b.texto, b.texto_fraco, 0.4),
+            text_faint: b.texto_fraco,
+            icon: mix(b.texto, b.texto_fraco, 0.2),
+            accent: b.destaque,
+            accent_soft: b.selecao,
+            accent_border: b.destaque,
+            // Accent-coloured marks and labels on the panels: the cream on dark surfaces (as Pro's
+            // white), the flame red on light ones.
+            accent_text: if b.escuro { b.texto_destaque } else { b.destaque },
+            separator: b.borda,
+            shadow: with_alpha(shade, if b.escuro { 150 } else { 50 }),
+            primary_bg: b.destaque,
+            primary_text: b.texto_destaque,
+            danger: b.erro,
+            warning: b.aviso,
+            tab_strip: dock,
+            row_selected: over(b.selecao, b.painel),
+            histogram_bg: b.fundo,
+            caption_close: fisilab_brand::palette::VERMELHO,
+            caption_close_text: Color32::WHITE,
+            scrim: with_alpha(shade, 110),
+            ..layout
+        }
+    }
+
     /// Tokens for the active theme (stored in egui's context data by [`apply`]).
     pub fn get(ctx: &egui::Context) -> Tokens {
         ctx.data(|d| d.get_temp::<Tokens>(egui::Id::new("photocraft-theme"))).unwrap_or_else(|| Tokens::for_kind(ThemeKind::Studio))
@@ -805,13 +875,14 @@ impl Tokens {
     /// [`crate::widgets::text_field`], because `Visuals::selection` also fills selected list rows
     /// and slider trails, which must keep the theme's.
     pub fn field_selection(&self) -> Color32 {
-        if self.pro { Color32::from_gray(if self.dark() { 96 } else { 201 }) } else { self.accent_soft }
+        if self.pro && !self.kind.is_ufrgs() { Color32::from_gray(if self.dark() { 96 } else { 201 }) } else { self.accent_soft }
     }
 
     pub fn dark(&self) -> bool {
         matches!(
             self.kind,
-            ThemeKind::Studio
+            ThemeKind::UfrgsNoite
+                | ThemeKind::Studio
                 | ThemeKind::Pro
                 | ThemeKind::ProMedium
                 | ThemeKind::SolarizedDark
@@ -820,6 +891,24 @@ impl Tokens {
                 | ThemeKind::SoftDark
         )
     }
+}
+
+/// `a` towards `b` by `t` (0 = `a`, 1 = `b`), per channel, opaque.
+fn mix(a: Color32, b: Color32, t: f32) -> Color32 {
+    let ch = |x: u8, y: u8| (f32::from(x) + (f32::from(y) - f32::from(x)) * t).round() as u8;
+    Color32::from_rgb(ch(a.r(), b.r()), ch(a.g(), b.g()), ch(a.b(), b.b()))
+}
+
+/// `c` with an alpha of `a` (straight alpha).
+fn with_alpha(c: Color32, a: u8) -> Color32 {
+    Color32::from_rgba_unmultiplied(c.r(), c.g(), c.b(), a)
+}
+
+/// The premultiplied colour `top` composited over the opaque `under`.
+fn over(top: Color32, under: Color32) -> Color32 {
+    let k = 1.0 - f32::from(top.a()) / 255.0;
+    let ch = |t: u8, u: u8| (f32::from(t) + f32::from(u) * k).round().min(255.0) as u8;
+    Color32::from_rgb(ch(top.r(), under.r()), ch(top.g(), under.g()), ch(top.b(), under.b()))
 }
 
 /// Register Inter (UI) and JetBrains Mono (numbers) plus named weights.
@@ -993,7 +1082,9 @@ pub fn apply(ctx: &egui::Context, kind: ThemeKind) {
     v.window_shadow = egui::Shadow { offset: [0, 10], blur: 32, spread: 0, color: t.shadow };
     v.popup_shadow = egui::Shadow { offset: [0, 6], blur: 20, spread: 0, color: t.shadow };
     v.selection.bg_fill = if t.bevel || t.pro { t.accent } else { t.accent_soft };
-    v.selection.stroke = Stroke::new(1.0, t.accent_text);
+    // Selected rows and labels sit on the accent: the UFRGS themes use the text-on-accent colour
+    // there (UFRGS Dia's accent text is the accent itself).
+    v.selection.stroke = Stroke::new(1.0, if t.kind.is_ufrgs() { t.primary_text } else { t.accent_text });
     v.slider_trailing_fill = true;
     v.handle_shape = egui::style::HandleShape::Circle;
     v.striped = false;
@@ -1129,7 +1220,7 @@ mod tests {
         let mut width = 0.0;
         ctx.run_ui(Default::default(), |ui| {
             assert!(medium_bound(ui.ctx()), "the installed stack reaches the second pass");
-            width = ui.painter().layout_no_wrap("PhotoCraft".into(), medium(13.0), Color32::WHITE).size().x;
+            width = ui.painter().layout_no_wrap("FisiFoto".into(), medium(13.0), Color32::WHITE).size().x;
         })
         .textures_delta
         .clear();
@@ -1139,7 +1230,7 @@ mod tests {
         let mut scaled = 0.0;
         ctx.run_ui(Default::default(), |ui| {
             assert!(medium_bound(ui.ctx()));
-            scaled = ui.painter().layout_no_wrap("PhotoCraft".into(), medium(13.0), Color32::WHITE).size().x;
+            scaled = ui.painter().layout_no_wrap("FisiFoto".into(), medium(13.0), Color32::WHITE).size().x;
         })
         .textures_delta
         .clear();
@@ -1149,7 +1240,7 @@ mod tests {
         for _ in 0..2 {
             ctx.run_ui(Default::default(), |ui| {
                 assert!(medium_bound(ui.ctx()));
-                let w = ui.painter().layout_no_wrap("PhotoCraft".into(), medium(13.0), Color32::WHITE).size().x;
+                let w = ui.painter().layout_no_wrap("FisiFoto".into(), medium(13.0), Color32::WHITE).size().x;
                 assert!((w - scaled).abs() < 1.0, "{w} vs {scaled}");
             })
             .textures_delta
@@ -1313,6 +1404,57 @@ mod tests {
             for k in [1.0, 0.93, 0.85] {
                 assert!(contrast(t.primary_text, t.primary_bg.gamma_multiply(k)) >= 4.5, "{kind:?}: primary at {k}");
             }
+        }
+    }
+
+    /// Suíte FisiLab: UFRGS Noite is the default and UFRGS Dia its light twin, first in the theme
+    /// list; both keep the upstream default's layout (Pro Medium Gray) in the brand colours.
+    #[test]
+    fn ufrgs_themes_are_first_default_and_readable() {
+        assert_eq!(ThemeKind::default(), ThemeKind::UfrgsNoite);
+        assert_eq!(&ThemeKind::ALL[..2], &[ThemeKind::UfrgsNoite, ThemeKind::UfrgsDia]);
+        let layout = Tokens::for_kind(ThemeKind::ProMedium);
+        for (kind, id, label, tons) in [
+            (ThemeKind::UfrgsNoite, "ufrgsNoite", "UFRGS Noite", &fisilab_brand::palette::NOITE),
+            (ThemeKind::UfrgsDia, "ufrgsDia", "UFRGS Dia", &fisilab_brand::palette::DIA),
+        ] {
+            assert_eq!((kind.id(), kind.label()), (id, label));
+            assert_eq!(ThemeKind::from_name(id), Some(kind));
+            assert_eq!(ThemeKind::from_name(label), Some(kind));
+            assert!(kind.is_pro() && kind.is_ufrgs());
+            let t = Tokens::for_kind(kind);
+            assert_eq!(t.kind, kind);
+            assert_eq!(t.dark(), tons.escuro, "{kind:?}");
+            // Only the colours change: the layout is the upstream default's.
+            assert_eq!((t.pro, t.bevel, t.round_chips), (layout.pro, layout.bevel, layout.round_chips));
+            assert_eq!((t.radius_sm, t.radius, t.radius_lg, t.histogram_level), (layout.radius_sm, layout.radius, layout.radius_lg, layout.histogram_level));
+            // The brand roles.
+            assert_eq!(
+                (t.canvas, t.chrome, t.field, t.text, t.accent, t.primary_bg),
+                (tons.fundo, tons.painel, tons.elevado, tons.texto, tons.destaque, tons.destaque)
+            );
+            // Text reads on every surface it sits on.
+            for surface in [t.chrome, t.dock, t.card, t.field, t.hover, t.pressed, t.row_selected] {
+                assert!(contrast(t.text, surface) >= 7.0, "{kind:?}: text on {surface:?}");
+                assert!(contrast(t.text_dim, surface) >= 4.5, "{kind:?}: dim text on {surface:?}");
+                assert!(contrast(t.text_faint, surface) >= 3.0, "{kind:?}: faint text on {surface:?}");
+            }
+            assert!(contrast(t.text_dim, t.card) > contrast(t.text_faint, t.card), "{kind:?}: text hierarchy");
+            for k in [1.0, 0.93, 0.85] {
+                assert!(contrast(t.primary_text, t.primary_bg.gamma_multiply(k)) >= 4.5, "{kind:?}: primary button label at {k}");
+            }
+            for surface in [t.chrome, t.card] {
+                assert!(contrast(t.accent_text, surface) >= 3.0, "{kind:?}: accent marks on {surface:?}");
+                assert!(contrast(t.danger, surface) >= 3.0 && contrast(t.warning, surface) >= 3.0, "{kind:?}: status on {surface:?}");
+            }
+            assert!(contrast(t.caption_close_text, t.caption_close) >= 4.5, "{kind:?}: close button glyph");
+            // Selected rows and labels on the accent use the text-on-accent colour.
+            let ctx = egui::Context::default();
+            apply(&ctx, kind);
+            let v = ctx.global_style().visuals.clone();
+            assert_eq!((v.selection.bg_fill, v.selection.stroke.color), (t.accent, t.primary_text));
+            assert_eq!(v.dark_mode, tons.escuro);
+            assert_ne!(t.field_selection(), Color32::from_gray(96), "{kind:?}: brand selection in text fields");
         }
     }
 

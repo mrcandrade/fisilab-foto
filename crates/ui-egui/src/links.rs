@@ -1,20 +1,23 @@
-//! Community and project links: the Help menu, the About dialog, the start screen and the title
-//! bar all open these. URLs follow the crafting-app pattern (`getartcraft.com/apps/<app>`,
-//! `github.com/storytold/<app>`).
+//! Project links: the Help menu, the About dialog and the start screen open these.
+//!
+//! Suíte FisiLab: upstream linked its community Discord and the ArtCraft websites here; FisiFoto
+//! links the suite's page, the manifesto, the original project (credit) and its own issue tracker.
 
 use serde_json::{Value, json};
 
 use crate::PhotocraftApp;
 
-pub const DISCORD: &str = "https://discord.gg/artcraft";
-pub const ARTCRAFT_WEBSITE: &str = "https://getartcraft.com";
-pub const APP_PAGE: &str = "https://getartcraft.com/apps/photocraft";
-pub const GITHUB: &str = "https://github.com/storytold/photocraft";
-pub const ISSUES: &str = "https://github.com/storytold/photocraft/issues";
+/// The Suíte FisiLab page (source code, installers, credits).
+pub const SUITE: &str = fisilab_brand::SUITE_URL;
+/// "Manifesto pelas tecnologias livres".
+pub const MANIFESTO: &str = fisilab_brand::MANIFESTO_URL;
+/// The original project FisiFoto is based on.
+pub const UPSTREAM: &str = "https://github.com/storytold/photocraft";
+/// Where FisiFoto's problems are reported.
+pub const ISSUES: &str = "https://github.com/mrcandrade/fisifoto/issues";
 
 /// Help-menu link commands: (id, url). Labels live in `menus::UI_COMMANDS`.
-pub const COMMANDS: &[(&str, &str)] =
-    &[("help.discord", DISCORD), ("help.website", APP_PAGE), ("help.artcraftWebsite", ARTCRAFT_WEBSITE), ("help.github", GITHUB), ("help.reportIssue", ISSUES)];
+pub const COMMANDS: &[(&str, &str)] = &[("help.website", SUITE), ("help.manifesto", MANIFESTO), ("help.github", UPSTREAM), ("help.reportIssue", ISSUES)];
 
 pub fn url_for(id: &str) -> Option<&'static str> {
     COMMANDS.iter().find(|c| c.0 == id).map(|c| c.1)
@@ -32,20 +35,22 @@ pub fn open(app: &mut PhotocraftApp, ctx: &egui::Context, url: &str) -> Value {
     json!({"url": url})
 }
 
-/// The prominent "Join us on Discord" button.
-pub fn discord_button(app: &mut PhotocraftApp, ui: &mut egui::Ui, min_width: f32) -> egui::Response {
-    let r = crate::widgets::primary_button(ui, tl!("Join us on Discord"), min_width).on_hover_text(DISCORD);
+/// The prominent "Sobre a Suíte FisiLab…" button (upstream: "Join us on Discord"): opens the
+/// suite's About window (credits, manifesto, UFRGS and CTA).
+pub fn fisilab_button(ui: &mut egui::Ui, min_width: f32) -> egui::Response {
+    let r = crate::widgets::primary_button(ui, fisilab_brand::ABOUT_MENU_LABEL, min_width);
     if r.clicked() {
-        open(app, ui.ctx(), DISCORD);
+        fisilab_brand::about::open(ui.ctx());
     }
     r
 }
 
-/// "PhotoCraft website · GitHub · ArtCraft" as links, centred. Clicks route through [`open`] (the
-/// platform browser service) rather than `ui.hyperlink_to`, which uses the unreliable `ctx.open_url`.
+/// "Site da Suíte FisiLab · Manifesto · Projeto original" as links, centred. Clicks route through
+/// [`open`] (the platform browser service) rather than `ui.hyperlink_to`, which uses the unreliable
+/// `ctx.open_url`. The labels are already in Brazilian Portuguese.
 pub fn link_row(app: &mut PhotocraftApp, ui: &mut egui::Ui) {
     let t = crate::theme::Tokens::get(ui.ctx());
-    let links = [(tl!("PhotoCraft website"), APP_PAGE), (tl!("GitHub"), GITHUB), (tl!("ArtCraft"), ARTCRAFT_WEBSITE)];
+    let links = [("Site da Suíte FisiLab", SUITE), ("Manifesto", MANIFESTO), ("Projeto original (PhotoCraft)", UPSTREAM)];
     let font = egui::FontId::proportional(12.5);
     let sep = "  ·  ";
     let width: f32 = links.iter().map(|(l, _)| ui.painter().layout_no_wrap((*l).into(), font.clone(), t.text).size().x).sum::<f32>()
@@ -74,7 +79,7 @@ mod tests {
 
     #[test]
     fn links_open_through_the_platform_service() {
-        // Issue #14: links (Help menu, Discord button, start-page links) must open in the browser.
+        // Issue #14: links (Help menu, start-page links) must open in the browser.
         // They route through the `open_url` service rather than the unreliable `ctx.open_url`.
         use std::sync::{Arc, Mutex};
         let opened: Arc<Mutex<Vec<String>>> = Arc::new(Mutex::new(Vec::new()));
@@ -93,16 +98,16 @@ mod tests {
             crate::menus::invoke(&mut app, &ctx, id, json!({})).unwrap();
             assert_eq!(opened.lock().unwrap().last().map(String::as_str), Some(*url), "{id}");
         }
-        // The direct open() helper (Discord button / start-page links) also uses it.
-        open(&mut app, &ctx, DISCORD);
-        assert_eq!(opened.lock().unwrap().last().map(String::as_str), Some(DISCORD));
+        // The direct open() helper (start-page links) also uses it.
+        open(&mut app, &ctx, MANIFESTO);
+        assert_eq!(opened.lock().unwrap().last().map(String::as_str), Some(MANIFESTO));
     }
 
     #[test]
     fn help_menu_lists_links_then_separator_then_system_info_and_about() {
         let app = PhotocraftApp::new(photocraft_engine::Session::new(), Default::default());
         let help: Vec<String> = crate::menus::menu_items(&app).into_iter().filter(|i| i.path == ["Help"]).map(|i| i.id).collect();
-        assert_eq!(help, ["help.discord", "help.website", "help.artcraftWebsite", "help.github", "help.reportIssue", "---", "help.systemInfo", "help.about"]);
+        assert_eq!(help, ["help.website", "help.manifesto", "help.github", "help.reportIssue", "---", "help.systemInfo", "help.fisilab", "help.about"]);
         for (id, _) in COMMANDS {
             assert!(crate::menus::is_live(id) && crate::menus::is_enabled(&app, id), "{id}");
         }
@@ -113,13 +118,21 @@ mod tests {
         let mut app = PhotocraftApp::new(photocraft_engine::Session::new(), Default::default());
         let ctx = egui::Context::default();
         for (id, url) in [
-            ("help.discord", "https://discord.gg/artcraft"),
-            ("help.website", "https://getartcraft.com/apps/photocraft"),
+            ("help.website", fisilab_brand::SUITE_URL),
+            ("help.manifesto", fisilab_brand::MANIFESTO_URL),
             ("help.github", "https://github.com/storytold/photocraft"),
+            ("help.reportIssue", "https://github.com/mrcandrade/fisifoto/issues"),
         ] {
             let r = crate::menus::invoke(&mut app, &ctx, id, serde_json::json!({})).unwrap();
             assert_eq!(r["url"], url);
             assert_eq!(app.ui.status, format!("Opened {url}"));
+        }
+    }
+
+    #[test]
+    fn no_link_points_at_upstream_community_sites() {
+        for (_, url) in COMMANDS {
+            assert!(!url.contains("discord") && !url.contains("getartcraft"), "{url}");
         }
     }
 }

@@ -1,4 +1,4 @@
-//! Photocraft's first UI shell, built on egui/eframe.
+//! FisiFoto's UI shell (Suíte FisiLab; based on PhotoCraft's), built on egui/eframe.
 //!
 //! This crate is deliberately thin. Every action goes through
 //! [`photocraft_engine::Session::execute`], and all UI state lives in [`state::UiState`] (plain
@@ -238,6 +238,18 @@ use std::sync::mpsc::{Receiver, Sender};
 use photocraft_doc::{DocId, Document};
 use photocraft_engine::Session;
 use serde_json::{Value, json};
+
+/// What FisiFoto tells the Suíte FisiLab brand crate about itself: the splash, the "Sobre a Suíte
+/// FisiLab" window and its credits to the original project read this.
+pub const APP_INFO: fisilab_brand::AppInfo = fisilab_brand::AppInfo {
+    name: "FisiFoto",
+    tagline: "Editor de imagens",
+    equivalent: "Adobe Photoshop",
+    version: env!("CARGO_PKG_VERSION"),
+    upstream_name: "PhotoCraft",
+    upstream_url: "https://github.com/storytold/photocraft",
+    upstream_copyright: "© 2026 ArtCraft Team e contribuidores do PhotoCraft",
+};
 
 pub use control::{ControlRequest, ControlResponse};
 pub use file_dialog::{FileDialogAnswer, FileDialogFn, FileDialogReply, FileDialogRequest};
@@ -1801,6 +1813,11 @@ impl eframe::App for PhotocraftApp {
             self.automation_input = false;
             return;
         }
+        // Suíte FisiLab: the CTA splash (first seconds) and the suite's About window. Both draw in
+        // their own top-level areas (`Order::Debug` for the splash), so calling this before the
+        // app's panels still puts them on top; calling it here keeps it running on every frame,
+        // including the early returns below (the screen colour picker's modal).
+        fisilab_brand::frame(&ctx, &APP_INFO);
         let t0 = gpu_canvas::now_ms();
         self.perf.frame_refresh_ms = 0.0;
         self.stroke_trace.cpu_prev(frame.info().cpu_usage);

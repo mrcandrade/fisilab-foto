@@ -3,7 +3,7 @@
 O **Foto** é uma versão modificada do [PhotoCraft](https://github.com/storytold/photocraft)
 (© 2026 ArtCraft Team e contribuidores do PhotoCraft, MIT OR Apache-2.0), disponibilizada pelo
 **FisiLab — LARFIC · UFRGS** em parceria com o **CTA — Centro de Tecnologia Acadêmica**, como parte
-da Suíte FisiLab, para uso de estudantes, professores e técnicos da UFRGS.
+da Suíte FisiLab, para democratizar o acesso à tecnologia entre os alunos da UFRGS.
 
 Este arquivo lista o que foi alterado e por quê. As modificações estão sob os mesmos termos do
 original (MIT OR Apache-2.0); veja [NOTICE](NOTICE).

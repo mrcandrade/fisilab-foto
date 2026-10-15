@@ -45,8 +45,7 @@ programas livres para ensinar, pesquisar e criar na universidade. Ele é uma ver
 
 ### Windows
 
-Baixe o instalador `FisiLab-Foto-Setup-<versão>.exe` no portal de downloads da Suíte FisiLab ou na
-página de [versões do Foto no GitHub](https://github.com/mrcandrade/fisilab-foto/releases) e execute-o.
+Baixe o instalador `FisiLab-Foto-Setup-<versão>.exe` na [página de downloads da Suíte FisiLab](https://github.com/mrcandrade/larfic/releases/latest) e execute-o.
 O Foto abre em português do Brasil, com a paleta original do PhotoCraft (tema **Noite**; o tema claro **Dia** e os
 demais temas estão em *Janela › Tema*).
 
@@ -86,11 +85,15 @@ Conhecimento produzido em uma universidade pública deve circular livremente, e 
 usamos para ensinar, pesquisar e criar também devem ser livres: leia o
 [Manifesto pelas tecnologias livres](https://github.com/mrcandrade/larfic/blob/main/suite-fisilab/MANIFESTO.md).
 
+## Privacidade
+
+O Foto não coleta dados de uso nem envia o conteúdo dos seus arquivos para lugar nenhum: não há
+telemetria, estatísticas nem verificação automática de atualizações. Veja o que ele guarda no seu
+computador e quando usa a internet no [aviso de privacidade da Suíte FisiLab](https://github.com/mrcandrade/larfic/blob/main/suite-fisilab/PRIVACIDADE.md).
+
 ---
 
 <p align="center">
-  <a href="https://www.ufrgs.br"><img src="assets/fisilab/ufrgs-logo.gif" alt="UFRGS" height="48"></a>
-  &nbsp;&nbsp;&nbsp;
   <a href="https://cta.if.ufrgs.br"><img src="assets/fisilab/cta-logo.webp" alt="CTA — Centro de Tecnologia Acadêmica" height="48"></a>
   &nbsp;&nbsp;&nbsp;
   <img src="assets/fisilab/larfic-logo.png" alt="LARFIC — Laboratório de Robótica, Inteligência Artificial e Física Computacional" height="48">

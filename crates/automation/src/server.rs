@@ -447,8 +447,8 @@ fn to_result(r: Result<Value, AutomationError>) -> Result<CallToolResult, McpErr
 fn bridge_only(name: &str) -> Result<CallToolResult, McpError> {
     Ok(fail(format!(
         "`{name}` drives the live GUI and needs bridge mode: start the app with \
-         `fisifoto --control <port> --control-token-file <path>`, then run \
-         `fisifoto-cli mcp --bridge 127.0.0.1:<port> --control-token-file <path>`"
+         `fisilab-foto --control <port> --control-token-file <path>`, then run \
+         `fisilab-foto-cli mcp --bridge 127.0.0.1:<port> --control-token-file <path>`"
     )))
 }
 

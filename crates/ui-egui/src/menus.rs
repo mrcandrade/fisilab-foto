@@ -103,7 +103,7 @@ pub const UI_COMMANDS: &[(&str, &str, &[&str], Option<&str>)] = &[
     ("help.reportIssue", "Reportar um problema…", &["Help"], None),
     ("help.systemInfo", "System Info…", &["Help"], None),
     ("help.fisilab", fisilab_brand::ABOUT_MENU_LABEL, &["Help"], None),
-    ("help.about", "About FisiFoto", &["Help"], None),
+    ("help.about", "About Foto", &["Help"], None),
 ];
 
 /// Window › <document>: the open documents, listed at the end of the Window menu as in Photoshop.
@@ -1863,7 +1863,7 @@ mod tests {
                 }
                 h.run_steps(3);
             };
-            let open = |h: &Harness<'_, PhotocraftApp>| h.query_by_label_contains("About FisiFoto").is_some();
+            let open = |h: &Harness<'_, PhotocraftApp>| h.query_by_label_contains("About Foto").is_some();
             let field_id = egui::Id::new("help-menu-search").with("field");
             let help = h.get_by_label("Help").rect().center();
             click(&mut h, help);

@@ -1,6 +1,6 @@
 //! Project links: the Help menu, the About dialog and the start screen open these.
 //!
-//! Suíte FisiLab: upstream linked its community Discord and the ArtCraft websites here; FisiFoto
+//! Suíte FisiLab: upstream linked its community Discord and the ArtCraft websites here; Foto
 //! links the suite's page, the manifesto, the original project (credit) and its own issue tracker.
 
 use serde_json::{Value, json};
@@ -11,10 +11,10 @@ use crate::PhotocraftApp;
 pub const SUITE: &str = fisilab_brand::SUITE_URL;
 /// "Manifesto pelas tecnologias livres".
 pub const MANIFESTO: &str = fisilab_brand::MANIFESTO_URL;
-/// The original project FisiFoto is based on.
+/// The original project Foto is based on.
 pub const UPSTREAM: &str = "https://github.com/storytold/photocraft";
-/// Where FisiFoto's problems are reported.
-pub const ISSUES: &str = "https://github.com/mrcandrade/fisifoto/issues";
+/// Where Foto's problems are reported.
+pub const ISSUES: &str = "https://github.com/mrcandrade/fisilab-foto/issues";
 
 /// Help-menu link commands: (id, url). Labels live in `menus::UI_COMMANDS`.
 pub const COMMANDS: &[(&str, &str)] = &[("help.website", SUITE), ("help.manifesto", MANIFESTO), ("help.github", UPSTREAM), ("help.reportIssue", ISSUES)];
@@ -121,7 +121,7 @@ mod tests {
             ("help.website", fisilab_brand::SUITE_URL),
             ("help.manifesto", fisilab_brand::MANIFESTO_URL),
             ("help.github", "https://github.com/storytold/photocraft"),
-            ("help.reportIssue", "https://github.com/mrcandrade/fisifoto/issues"),
+            ("help.reportIssue", "https://github.com/mrcandrade/fisilab-foto/issues"),
         ] {
             let r = crate::menus::invoke(&mut app, &ctx, id, serde_json::json!({})).unwrap();
             assert_eq!(r["url"], url);

@@ -4,29 +4,29 @@
 //! In order:
 //! 1. `PHOTOCRAFT_CONFIG_DIR`, when set (tests, agents, custom setups).
 //! 2. **Portable mode** (#228): a marker file ([`PORTABLE_MARKERS`]) beside the executable puts
-//!    everything in `<exe dir>/FisiFotoData`, so a portable copy on a USB stick leaves nothing in
+//!    everything in `<exe dir>/FisiLabFotoData`, so a portable copy on a USB stick leaves nothing in
 //!    `%APPDATA%`. The Windows portable zip ships with `portable.txt`; the MSI doesn't. If that
 //!    folder can't be written (read-only medium, Program Files), the app warns and falls back.
-//! 3. The platform convention, under the Suíte FisiLab app id so FisiFoto never shares settings with
-//!    an installed PhotoCraft: macOS `~/Library/Application Support/br.ufrgs.fisilab.fisifoto`,
-//!    Windows `%APPDATA%\FisiLab\FisiFoto`, Linux `$XDG_CONFIG_HOME/fisifoto` or
-//!    `~/.config/fisifoto`.
+//! 3. The platform convention, under the Suíte FisiLab app id so Foto never shares settings with
+//!    an installed PhotoCraft: macOS `~/Library/Application Support/br.ufrgs.fisilab.foto`,
+//!    Windows `%APPDATA%\FisiLab\Foto`, Linux `$XDG_CONFIG_HOME/fisilab-foto` or
+//!    `~/.config/fisilab-foto`.
 
 use std::ffi::OsString;
 use std::path::{Path, PathBuf};
 use std::sync::OnceLock;
 
 /// Files beside the executable that switch on portable mode (either one; contents are ignored).
-pub const PORTABLE_MARKERS: [&str; 2] = ["portable.txt", "FisiFoto.portable"];
+pub const PORTABLE_MARKERS: [&str; 2] = ["portable.txt", "FisiLabFoto.portable"];
 /// The data folder created beside the executable in portable mode.
-pub const PORTABLE_DATA_DIR: &str = "FisiFotoData";
+pub const PORTABLE_DATA_DIR: &str = "FisiLabFotoData";
 
 /// How [`DataDir::dir`] was chosen.
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum Mode {
     /// `PHOTOCRAFT_CONFIG_DIR`.
     Override,
-    /// `<exe dir>/FisiFotoData`.
+    /// `<exe dir>/FisiLabFotoData`.
     Portable,
     /// The platform's per-user config directory.
     Platform,
@@ -50,7 +50,7 @@ pub fn current() -> &'static DataDir {
         let d = resolve(|k| std::env::var_os(k), exe.as_deref().and_then(Path::parent));
         if let Some(w) = &d.warning {
             log::warn!("{w}");
-            eprintln!("fisifoto: {w}");
+            eprintln!("fisilab-foto: {w}");
         }
         log::info!("settings directory ({:?}): {:?}", d.mode, d.dir);
         d
@@ -87,12 +87,12 @@ pub fn resolve(env: impl Fn(&str) -> Option<OsString>, exe_dir: Option<&Path>) -
 pub fn platform_dir(env: &impl Fn(&str) -> Option<OsString>) -> Option<PathBuf> {
     let home = env("HOME").filter(|h| !h.is_empty()).map(PathBuf::from);
     if cfg!(target_os = "macos") {
-        return home.map(|h| h.join("Library/Application Support/br.ufrgs.fisilab.fisifoto"));
+        return home.map(|h| h.join("Library/Application Support/br.ufrgs.fisilab.foto"));
     }
     if cfg!(windows) {
-        return env("APPDATA").filter(|a| !a.is_empty()).map(|a| PathBuf::from(a).join("FisiLab").join("FisiFoto"));
+        return env("APPDATA").filter(|a| !a.is_empty()).map(|a| PathBuf::from(a).join("FisiLab").join("Foto"));
     }
-    env("XDG_CONFIG_HOME").filter(|x| !x.is_empty()).map(PathBuf::from).or_else(|| home.map(|h| h.join(".config"))).map(|c| c.join("fisifoto"))
+    env("XDG_CONFIG_HOME").filter(|x| !x.is_empty()).map(PathBuf::from).or_else(|| home.map(|h| h.join(".config"))).map(|c| c.join("fisilab-foto"))
 }
 
 /// The first portable marker file in `exe_dir`, if any.
@@ -151,13 +151,13 @@ mod tests {
         assert!(!exe.join(PORTABLE_DATA_DIR).exists(), "no portable folder without a marker");
         // The convention per platform.
         if cfg!(target_os = "macos") {
-            assert_eq!(dir, root.join("home/Library/Application Support/br.ufrgs.fisilab.fisifoto"));
+            assert_eq!(dir, root.join("home/Library/Application Support/br.ufrgs.fisilab.foto"));
         } else if cfg!(windows) {
-            assert_eq!(dir, root.join("appdata").join("FisiLab").join("FisiFoto"));
+            assert_eq!(dir, root.join("appdata").join("FisiLab").join("Foto"));
         } else {
-            assert_eq!(dir, root.join("home/.config/fisifoto"));
+            assert_eq!(dir, root.join("home/.config/fisilab-foto"));
         }
-        // Never the upstream app's folder (Suíte FisiLab: FisiFoto and PhotoCraft can share a machine).
+        // Never the upstream app's folder (Suíte FisiLab: Foto and PhotoCraft can share a machine).
         assert!(!dir.ends_with("Photocraft") && !dir.ends_with("photocraft"), "{dir:?}");
         let _ = std::fs::remove_dir_all(&root);
     }
@@ -166,7 +166,7 @@ mod tests {
     fn either_marker_keeps_everything_beside_the_exe() {
         for marker in PORTABLE_MARKERS {
             let root = temp("portable");
-            let exe = root.join("FisiFoto");
+            let exe = root.join("FisiLab Foto");
             std::fs::create_dir_all(&exe).unwrap();
             std::fs::write(exe.join(marker), b"").unwrap();
             let d = resolve(fake_home(&root), Some(&exe));

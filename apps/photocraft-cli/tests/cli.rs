@@ -1,4 +1,4 @@
-//! Process-level tests of the `fisifoto-cli` binary (package photocraft-cli).
+//! Process-level tests of the `fisilab-foto-cli` binary (package photocraft-cli).
 
 use std::io::{BufRead, BufReader, Write};
 use std::path::{Path, PathBuf};
@@ -7,7 +7,7 @@ use std::process::{Command, Stdio};
 use serde_json::{Value, json};
 
 fn bin() -> Command {
-    Command::new(env!("CARGO_BIN_EXE_fisifoto-cli"))
+    Command::new(env!("CARGO_BIN_EXE_fisilab-foto-cli"))
 }
 
 fn tmp(name: &str) -> PathBuf {
@@ -40,7 +40,7 @@ fn usage_and_unknown_command() {
     let (out, _) = ok(bin().arg("--help"));
     assert!(out.contains("convert"));
     let (out, _) = ok(bin().arg("--version"));
-    assert!(out.starts_with("fisifoto-cli "));
+    assert!(out.starts_with("fisilab-foto-cli "));
 }
 
 /// #423: `<subcommand> --help` and `-h` print usage and return at once (no inputs read, no files
@@ -53,7 +53,7 @@ fn every_subcommand_answers_help() {
             let o = bin().current_dir(&d).arg(sub).arg(help).arg("--out").arg("x.png").stdin(Stdio::null()).output().unwrap();
             let out = String::from_utf8_lossy(&o.stdout);
             assert_eq!(o.status.code(), Some(0), "{sub} {help}: {}", String::from_utf8_lossy(&o.stderr));
-            assert!(out.contains("USAGE") && out.contains("fisifoto-cli batch"), "{sub} {help}: {out}");
+            assert!(out.contains("USAGE") && out.contains("fisilab-foto-cli batch"), "{sub} {help}: {out}");
         }
     }
     assert_eq!(std::fs::read_dir(&d).unwrap().count(), 0, "help wrote nothing");

@@ -6,8 +6,9 @@
 //! (see `app_dirs`). Each start moves the previous log to `photocraft.1.log` (and that one to
 //! `.2`), so the log of a run that crashed survives the next launch.
 //!
-//! Levels: `info` for PhotoCraft's own crates, `warn` for everything else (wgpu and naga are
-//! chatty). `RUST_LOG` replaces that with env_logger-style directives: `debug`,
+//! Levels: `info` for PhotoCraft's own crates and for this executable's modules (Suíte FisiLab: the
+//! binary is `fisilab-foto`, so its log target is `fisilab_foto::…`), `warn` for everything else
+//! (wgpu and naga are chatty). `RUST_LOG` replaces that with env_logger-style directives: `debug`,
 //! `warn,photocraft_gpu=trace`, `wgpu_core=info`. A directive ending in `*` matches every target
 //! that starts with it (`photocraft*=debug`).
 //!
@@ -32,7 +33,7 @@ pub const MAX_FILE_BYTES: u64 = 16 * 1024 * 1024;
 /// Records kept in memory until the log file is attached.
 pub const MAX_PENDING: usize = 512;
 /// The built-in filter when `RUST_LOG` is unset or empty.
-pub const DEFAULT_FILTER: &str = "warn,photocraft*=info";
+pub const DEFAULT_FILTER: &str = "warn,photocraft*=info,fisilab_foto=info";
 
 /// Per-target level filter parsed from env_logger-style directives.
 #[derive(Clone, Debug, PartialEq, Eq)]
@@ -272,6 +273,9 @@ mod tests {
         assert_eq!(f.level_for("photocraft"), LevelFilter::Info);
         assert_eq!(f.level_for("photocraft::gpu_startup"), LevelFilter::Info);
         assert_eq!(f.level_for("photocraft_gpu::health"), LevelFilter::Info);
+        // This executable's own modules (the bin `fisilab-foto` logs as `fisilab_foto::…`).
+        assert_eq!(f.level_for(module_path!()), LevelFilter::Info);
+        assert_eq!(f.level_for("fisilab_foto::gpu_startup"), LevelFilter::Info);
         assert_eq!(f.level_for("wgpu_core::device"), LevelFilter::Warn);
         assert_eq!(f.level_for("naga"), LevelFilter::Warn);
         assert_eq!(f.max(), LevelFilter::Info);

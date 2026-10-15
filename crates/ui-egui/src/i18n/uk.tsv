@@ -503,7 +503,7 @@
 	Hide All	Приховати все
 
 # Help
-	About FisiFoto	Про FisiFoto
+	About Foto	Про Foto
 	System Info…	Інформація про систему…
 
 # Tools and options bar
@@ -581,11 +581,11 @@
 	Import Shortcuts…	Імпортувати сполучення клавіш…
 	Load a keyboard shortcut set saved as .kys	Завантажити набір сполучень клавіш, збережений як .kys
 	Imported {n} shortcuts from {file}. Click OK to keep them.	Імпортовано сполучень клавіш: {n} із {file}. Натисніть OK, щоб зберегти їх.
-	{n} commands are not in FisiFoto.	Команд, яких немає в FisiFoto: {n}.
+	{n} commands are not in FisiLab Foto.	Команд, яких немає в FisiLab Foto: {n}.
 	Keyboard shortcuts imported	Сполучення клавіш імпортовано
 	Your keyboard shortcut set {set} is in use here: {n} shortcuts differ from the defaults. Edit › Keyboard Shortcuts shows them; Reset All to Defaults undoes this.	Тут використовується ваш набір сполучень клавіш {set}: сполучень, що відрізняються від стандартних: {n}. Їх показує Редагування › Сполучення клавіш; «Скинути все до стандартних» скасовує імпорт.
 	Import keyboard shortcuts?	Імпортувати сполучення клавіш?
-	FisiFoto found your keyboard shortcut set {set} from another image editor on this computer: {n} of its shortcuts differ from FisiFoto's. Import it?	FisiFoto знайшов на цьому комп'ютері ваш набір сполучень клавіш {set} з іншого графічного редактора: сполучень, що відрізняються від FisiFoto: {n}. Імпортувати його?
+	FisiLab Foto found your keyboard shortcut set {set} from another image editor on this computer: {n} of its shortcuts differ from FisiLab Foto's. Import it?	FisiLab Foto знайшов на цьому комп'ютері ваш набір сполучень клавіш {set} з іншого графічного редактора: сполучень, що відрізняються від FisiLab Foto: {n}. Імпортувати його?
 	Edit › Keyboard Shortcuts › Reset All to Defaults undoes an import.	Редагування › Сполучення клавіш › «Скинути все до стандартних» скасовує імпорт.
 	Don't Import	Не імпортувати
 	The keyboard shortcut set was not imported: {error}	Набір сполучень клавіш не імпортовано: {error}
@@ -890,7 +890,7 @@
 	Embed Color Profile	Вбудувати колірний профіль
 	Assign Profile…	Призначити профіль…
 	Convert to Profile…	Перетворити на профіль…
-	FisiFoto Manages Colors	FisiFoto керує кольорами
+	FisiLab Foto Manages Colors	FisiLab Foto керує кольорами
 	Printer Manages Colors	Принтер керує кольорами
 	(print to the printer)	(друк на принтері)
 	Absolute Colorimetric	Абсолютний колориметричний
@@ -1483,15 +1483,15 @@
 	Use File › Open, or paste a copied image with {paste}.	Скористайтеся меню Файл › Відкрити або вставте скопійоване зображення за допомогою {paste}.
 	Native file drag-and-drop is unavailable	Нативне перетягування файлів недоступне
 	Native file drag-and-drop is not supported on Wayland yet. Use File › Open, or copy the image in your file manager and paste it with {paste}.	Нативне перетягування файлів у Wayland ще не підтримується. Скористайтеся меню Файл › Відкрити або скопіюйте зображення у файловому менеджері та вставте його за допомогою {paste}.
-	To drop files, start FisiFoto under XWayland: `{command}`	Щоб перетягувати файли, запустіть FisiFoto під XWayland: `{command}`
-	Or set Preferences › Performance › Linux display server to X11: FisiFoto then always starts under XWayland.	Або виберіть X11 у Налаштування › Продуктивність › Сервер відображення Linux: FisiFoto завжди запускатиметься під XWayland.
+	To drop files, start FisiLab Foto under XWayland: `{command}`	Щоб перетягувати файли, запустіть FisiLab Foto під XWayland: `{command}`
+	Or set Preferences › Performance › Linux display server to X11: FisiLab Foto then always starts under XWayland.	Або виберіть X11 у Налаштування › Продуктивність › Сервер відображення Linux: FisiLab Foto завжди запускатиметься під XWayland.
 	Edit › Paste	Редагування › Вставити
 	Photo	Фото
 	Print	Друк
 	Art & Illustration	Мистецтво та ілюстрація
 	Mobile	Мобільні пристрої
 	Film & Video	Фільм і відео
-	Default FisiFoto Size	Типовий розмір FisiFoto
+	Default FisiLab Foto Size	Типовий розмір FisiLab Foto
 	Clipboard	Буфер обміну
 	Photo (2 × 3 in)	Фото (2 × 3 дюйми)
 	Photo (4 × 6 in)	Фото (4 × 6 дюймів)
@@ -1665,9 +1665,9 @@
 	Don't Save	Не зберігати
 	No	Ні
 	Yes	Так
-	These settings aren't available in FisiFoto yet.	Ці параметри ще недоступні у FisiFoto.
+	These settings aren't available in FisiLab Foto yet.	Ці параметри ще недоступні у FisiLab Foto.
 	Shortcut removed.	Клавіатурне скорочення вилучено.
-	All shortcuts reset to FisiFoto defaults.	Усі клавіатурні скорочення скинуто до типових значень FisiFoto.
+	All shortcuts reset to FisiLab Foto defaults.	Усі клавіатурні скорочення скинуто до типових значень FisiLab Foto.
 	Delete Shortcut	Видалити клавіатурне скорочення
 	Press keys…	Натисніть клавіші…
 	shortcut	клавіатурне скорочення
@@ -2153,8 +2153,8 @@
 	Output:	Вихід:
 	Paint Overlay	Малювати накладання
 	Pattern Size	Розмір візерунка
-	FisiFoto	FisiFoto
-	FisiFoto — an open-source, native image editor written in Rust.	FisiFoto — нативний редактор зображень із відкритим кодом, написаний на Rust.
+	Foto	Foto
+	Foto — an open-source, native image editor written in Rust.	Foto — нативний редактор зображень із відкритим кодом, написаний на Rust.
 	Position and Size	Положення та розмір
 	Preserve Details	Зберігати деталі
 	Preserve Luminosity	Зберігати світність
@@ -2466,7 +2466,7 @@
 	Automatic uses GPU acceleration when available and falls back to CPU rendering on errors.	Автоматичний режим використовує прискорення GPU, коли воно доступне, та переходить на рендеринг CPU в разі помилок.
 	Switched to CPU rendering	Перехід на рендеринг CPU
 	GPU acceleration could not continue. Your documents are unchanged.	Прискорення GPU не може продовжувати роботу. Ваші документи не змінено.
-	FisiFoto is using the CPU image compositor. The window may still use your graphics adapter.	FisiFoto використовує компонувальник зображень CPU. Вікно може й далі використовувати ваш графічний адаптер.
+	FisiLab Foto is using the CPU image compositor. The window may still use your graphics adapter.	FisiLab Foto використовує компонувальник зображень CPU. Вікно може й далі використовувати ваш графічний адаптер.
 	Retry GPU requires a restart. Save your work first.	Повторна спроба використати GPU потребує перезапуску. Спочатку збережіть роботу.
 	Keep Using CPU	Продовжити з CPU
 	Retry GPU	Повторити спробу з GPU
@@ -3704,7 +3704,7 @@ cameraData	Lens	Об'єктив
 	Click: smooth point · Double-click: corner · Drag a point: move · Click first point: close · {key} finish	Клацання: плавна точка · Подвійне клацання: кут · Перетягування точки: перемістити · Клацання першої точки: замкнути · {key}: завершити
 	Search settings…	Пошук налаштувань…
 	No matching settings	Немає відповідних налаштувань
-	FisiFoto — Screen Color Picker	FisiFoto — Піпетка кольору екрана
+	Foto — Screen Color Picker	Foto — Піпетка кольору екрана
 	Loading fonts…	Завантаження шрифтів…
 	Simulate Pressure	Імітувати натиск
 	Stroke Path…	Обвести контур…
@@ -3806,7 +3806,7 @@ curves	Smooth	Згладити
 	{name} (Photoshop)	{name} (Photoshop)
 	{message} ({note})	{message} ({note})
 @plural	Loaded {n} action from {file}|Loaded {n} actions from {file}	Завантажено {n} операцію з {file}|Завантажено {n} операції з {file}|Завантажено {n} операцій з {file}
-@plural	{n} step has no FisiFoto equivalent yet|{n} steps have no FisiFoto equivalent yet	{n} крок ще не має відповідника в FisiFoto|{n} кроки ще не мають відповідника в FisiFoto|{n} кроків ще не мають відповідника в FisiFoto
+@plural	{n} step has no FisiLab Foto equivalent yet|{n} steps have no FisiLab Foto equivalent yet	{n} крок ще не має відповідника в FisiLab Foto|{n} кроки ще не мають відповідника в FisiLab Foto|{n} кроків ще не мають відповідника в FisiLab Foto
 @plural	Saved {n} action to {file}|Saved {n} actions to {file}	Збережено {n} операцію до {file}|Збережено {n} операції до {file}|Збережено {n} операцій до {file}
 @plural	{n} step with no Photoshop equivalent left out|{n} steps with no Photoshop equivalent left out	Пропущено {n} крок без відповідника в Photoshop|Пропущено {n} кроки без відповідника в Photoshop|Пропущено {n} кроків без відповідника в Photoshop
 
@@ -3832,7 +3832,7 @@ curves	Smooth	Згладити
 	set in Print Settings…	задається в параметрах друку…
 	ICO is limited to 256 × 256 pixels	ICO обмежено розміром 256 × 256 пікселів
 
-# Suíte FisiLab (FisiFoto): menu items added by the FisiLab — LARFIC/UFRGS rebranding. Their source
+# Suíte FisiLab (Foto): menu items added by the FisiLab — LARFIC/UFRGS rebranding. Their source
 # text is already Brazilian Portuguese, so every catalog shows it as is.
 	Tema UFRGS Noite	Tema UFRGS Noite
 	Tema UFRGS Dia	Tema UFRGS Dia

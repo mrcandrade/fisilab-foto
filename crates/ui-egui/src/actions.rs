@@ -290,8 +290,8 @@ pub fn load_bytes(app: &mut PhotocraftApp, name: &str, bytes: &[u8]) -> Result<V
         let note = crate::i18n::trn(
             crate::i18n::current(),
             unsupported as u64,
-            "{n} step has no FisiFoto equivalent yet",
-            "{n} steps have no FisiFoto equivalent yet",
+            "{n} step has no FisiLab Foto equivalent yet",
+            "{n} steps have no FisiLab Foto equivalent yet",
         );
         let template = "{message} ({note})";
         crate::i18n::fmt(tl!(template), &[("message", &loaded), ("note", &note)])

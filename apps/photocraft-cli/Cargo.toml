@@ -1,7 +1,7 @@
 [package]
 name = "photocraft-cli"
-default-run = "fisifoto-cli"
-description = "Headless FisiFoto (based on PhotoCraft): convert, inspect, run commands, batch, MCP server"
+default-run = "fisilab-foto-cli"
+description = "Headless Foto (based on PhotoCraft): convert, inspect, run commands, batch, MCP server"
 version.workspace = true
 edition.workspace = true
 license.workspace = true
@@ -19,9 +19,9 @@ workspace = true
 name = "photocraft_cli"
 path = "src/lib.rs"
 
-# Suíte FisiLab: the CLI executable is fisifoto-cli(.exe); the package keeps its upstream name.
+# Suíte FisiLab: the CLI executable is fisilab-foto-cli(.exe); the package keeps its upstream name.
 [[bin]]
-name = "fisifoto-cli"
+name = "fisilab-foto-cli"
 path = "src/main.rs"
 
 [dependencies]
@@ -34,6 +34,6 @@ serde_json = { workspace = true }
 tokio = { version = "1", features = ["rt-multi-thread", "macros"] }
 
 [build-dependencies]
-# Icon + VERSIONINFO for fisifoto-cli.exe; build.rs only uses it when targeting Windows.
+# Icon + VERSIONINFO for fisilab-foto-cli.exe; build.rs only uses it when targeting Windows.
 winresource = "0.1"
 

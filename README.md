@@ -1,8 +1,8 @@
 <p align="center">
-  <img src="assets/fisilab/fisifoto-256.png" alt="Ícone do FisiFoto" width="128">
+  <img src="assets/fisilab/fisilab-foto-256.png" alt="Ícone do Foto" width="128">
 </p>
 
-<h1 align="center">FisiFoto</h1>
+<h1 align="center">Foto · Suíte FisiLab</h1>
 
 <p align="center">
   <b>Editor de imagens</b><br>
@@ -16,7 +16,7 @@
 
 ---
 
-O FisiFoto faz parte da [Suíte FisiLab](https://github.com/mrcandrade/larfic/tree/main/suite-fisilab):
+O Foto faz parte da [Suíte FisiLab](https://github.com/mrcandrade/larfic/tree/main/suite-fisilab):
 programas livres para ensinar, pesquisar e criar na universidade. Ele é uma versão modificada do
 [PhotoCraft](https://github.com/storytold/photocraft), um editor de imagens nativo escrito em Rust.
 
@@ -39,15 +39,15 @@ programas livres para ensinar, pesquisar e criar na universidade. Ele é uma ver
 - **Cores de verdade:** documentos RGB, Escala de cinza, CMYK e Lab em 8, 16 e 32 bits por canal,
   com gerenciamento de cores ICC e prova de cores na tela.
 - **Automação:** cada ação é um comando, então o mesmo motor pode ser usado pela interface, pela
-  linha de comando (`fisifoto-cli`), por ações gravadas, em lote ou por um servidor MCP.
+  linha de comando (`fisilab-foto-cli`), por ações gravadas, em lote ou por um servidor MCP.
 
 ## Instalação
 
 ### Windows
 
-Baixe o instalador `FisiFoto-Setup-<versão>.exe` no portal de downloads da Suíte FisiLab ou na
-página de [versões do FisiFoto no GitHub](https://github.com/mrcandrade/fisifoto/releases) e execute-o.
-O FisiFoto abre em português do Brasil, com o tema **UFRGS Noite** (o tema claro **UFRGS Dia** e os
+Baixe o instalador `FisiLab-Foto-Setup-<versão>.exe` no portal de downloads da Suíte FisiLab ou na
+página de [versões do Foto no GitHub](https://github.com/mrcandrade/fisilab-foto/releases) e execute-o.
+O Foto abre em português do Brasil, com o tema **UFRGS Noite** (o tema claro **UFRGS Dia** e os
 demais temas estão em *Janela › Tema*).
 
 ### Compilar a partir do código
@@ -55,19 +55,19 @@ demais temas estão em *Janela › Tema*).
 É preciso ter o [Rust](https://www.rust-lang.org/pt-BR/tools/install) instalado.
 
 ```sh
-git clone https://github.com/mrcandrade/fisifoto
-cd fisifoto
-cargo run --release -p photocraft --features heif -- imagem.psd   # o aplicativo (fisifoto.exe)
-cargo run --release -p photocraft-cli --features heif -- --help    # a linha de comando (fisifoto-cli.exe)
+git clone https://github.com/mrcandrade/fisilab-foto
+cd fisilab-foto
+cargo run --release -p photocraft --features heif -- imagem.psd   # o aplicativo (fisilab-foto.exe)
+cargo run --release -p photocraft-cli --features heif -- --help    # a linha de comando (fisilab-foto-cli.exe)
 ```
 
 Os pacotes Cargo mantêm os nomes originais (`photocraft`, `photocraft-cli`); os executáveis gerados
-se chamam `fisifoto` e `fisifoto-cli`. A opção `--features heif` (fotos HEIC/HEIF) é a mesma das
+se chamam `fisilab-foto` e `fisilab-foto-cli`. A opção `--features heif` (fotos HEIC/HEIF) é a mesma das
 versões oficiais.
 
 ## Créditos
 
-O FisiFoto é baseado no [PhotoCraft](https://github.com/storytold/photocraft), criado pela
+O Foto é baseado no [PhotoCraft](https://github.com/storytold/photocraft), criado pela
 **ArtCraft Team e contribuidores do PhotoCraft**. Todo o trabalho de edição, formatos de arquivo e
 ferramentas é deles; o FisiLab alterou o nome, a identidade visual, o tema de cores, a tela de
 abertura, os links e o idioma padrão (veja [MODIFICACOES.md](MODIFICACOES.md)).

@@ -782,7 +782,7 @@
 	Timeline	Zeitleiste
 	Tool Presets	Werkzeugvorgaben
 	Tools	Werkzeuge
-	About FisiFoto	Über FisiFoto
+	About Foto	Über Foto
 	WIA Support…	WIA-Unterstützung…
 	Apply	Anwenden
 	HSB/HSL	HSB/HSL
@@ -832,7 +832,7 @@
 	All Caps	Großbuchstaben
 	All Slices	Alle Slices
 	All User Slices	Alle Benutzer-Slices
-	All shortcuts reset to FisiFoto defaults.	Alle Kurzbefehle wurden auf die FisiFoto-Standards zurückgesetzt.
+	All shortcuts reset to FisiLab Foto defaults.	Alle Kurzbefehle wurden auf die FisiLab-Foto-Standards zurückgesetzt.
 	Alt	Alt
 	Always use pressure for opacity	Druck immer für Deckkraft verwenden
 	Always use pressure for size	Druck immer für Größe verwenden
@@ -1085,8 +1085,8 @@
 	Drop an image or PSD anywhere to open it.	Ziehe ein Bild oder PSD an eine beliebige Stelle, um es zu öffnen.
 	Native file drag-and-drop is unavailable	Natives Ziehen und Ablegen von Dateien ist nicht verfügbar
 	Native file drag-and-drop is not supported on Wayland yet. Use File › Open, or copy the image in your file manager and paste it with {paste}.	Natives Ziehen und Ablegen von Dateien wird unter Wayland noch nicht unterstützt. Nutze Datei › Öffnen oder kopiere das Bild im Dateimanager und füge es mit {paste} ein.
-	To drop files, start FisiFoto under XWayland: `{command}`	Um Dateien abzulegen, starte FisiFoto unter XWayland: `{command}`
-	Or set Preferences › Performance › Linux display server to X11: FisiFoto then always starts under XWayland.	Oder stelle Voreinstellungen › Leistung › Linux-Anzeigeserver auf X11: FisiFoto startet dann immer unter XWayland.
+	To drop files, start FisiLab Foto under XWayland: `{command}`	Um Dateien abzulegen, starte FisiLab Foto unter XWayland: `{command}`
+	Or set Preferences › Performance › Linux display server to X11: FisiLab Foto then always starts under XWayland.	Oder stelle Voreinstellungen › Leistung › Linux-Anzeigeserver auf X11: FisiLab Foto startet dann immer unter XWayland.
 	Edit › Paste	Bearbeiten › Einfügen
 	Duplicate Layers…	Ebenen duplizieren…
 	Duplicate style	Stil duplizieren
@@ -1333,9 +1333,9 @@
 	Perspective Warp is not active	Perspektivische Verkrümmung ist nicht aktiv
 	Perspective Warp: draw planes along the image's perspective, then switch to Warp	Perspektivische Verkrümmung: zeichne Flächen entlang der Bildperspektive, wechsle dann zu Verkrümmen
 	Photo Filter	Foto-Filter
-	FisiFoto	FisiFoto
-	FisiFoto Manages Colors	FisiFoto verwaltet die Farben
-	FisiFoto — an open-source, native image editor written in Rust.	FisiFoto — ein nativer Open-Source-Bildeditor, geschrieben in Rust.
+	Foto	Foto
+	FisiLab Foto Manages Colors	FisiLab Foto verwaltet die Farben
+	Foto — an open-source, native image editor written in Rust.	Foto — ein nativer Open-Source-Bildeditor, geschrieben in Rust.
 	Pin Depth:	Pin-Tiefe:
 	Pixel Length:	Pixel-Länge:
 	Pixels/Centimeter	Pixel/Zentimeter
@@ -1411,11 +1411,11 @@
 	Import Shortcuts…	Tastaturbefehle importieren…
 	Load a keyboard shortcut set saved as .kys	Einen als .kys gespeicherten Tastaturbefehlssatz laden
 	Imported {n} shortcuts from {file}. Click OK to keep them.	{n} Tastaturbefehle aus {file} importiert. Mit OK übernehmen.
-	{n} commands are not in FisiFoto.	{n} Befehle gibt es in FisiFoto nicht.
+	{n} commands are not in FisiLab Foto.	{n} Befehle gibt es in FisiLab Foto nicht.
 	Keyboard shortcuts imported	Tastaturbefehle importiert
 	Your keyboard shortcut set {set} is in use here: {n} shortcuts differ from the defaults. Edit › Keyboard Shortcuts shows them; Reset All to Defaults undoes this.	Dein Tastaturbefehlssatz {set} wird hier verwendet: {n} Tastaturbefehle weichen von den Standardwerten ab. Bearbeiten › Tastaturbefehle zeigt sie; Alles auf Standardwerte zurücksetzen macht es rückgängig.
 	Import keyboard shortcuts?	Tastaturbefehle importieren?
-	FisiFoto found your keyboard shortcut set {set} from another image editor on this computer: {n} of its shortcuts differ from FisiFoto's. Import it?	FisiFoto hat auf diesem Computer deinen Tastaturbefehlssatz {set} aus einem anderen Bildbearbeitungsprogramm gefunden: {n} seiner Tastaturbefehle weichen von denen in FisiFoto ab. Importieren?
+	FisiLab Foto found your keyboard shortcut set {set} from another image editor on this computer: {n} of its shortcuts differ from FisiLab Foto's. Import it?	FisiLab Foto hat auf diesem Computer deinen Tastaturbefehlssatz {set} aus einem anderen Bildbearbeitungsprogramm gefunden: {n} seiner Tastaturbefehle weichen von denen in FisiLab Foto ab. Importieren?
 	Edit › Keyboard Shortcuts › Reset All to Defaults undoes an import.	Bearbeiten › Tastaturbefehle › Alles auf Standardwerte zurücksetzen macht einen Import rückgängig.
 	Don't Import	Nicht importieren
 	The keyboard shortcut set was not imported: {error}	Der Tastaturbefehlssatz wurde nicht importiert: {error}
@@ -1639,7 +1639,7 @@
 	Current Tool	Aktuelles Werkzeug
 	Custom Shape Tool	Werkzeug für benutzerdefinierte Formen
 	Cyans	Cyantöne
-	Default FisiFoto Size	Standard-FisiFoto-Größe
+	Default FisiLab Foto Size	Standard-FisiLab-Foto-Größe
 	Delete Workspace	Arbeitsbereich löschen
 	Diamond	Raute
 	Dimensions:	Abmessungen:
@@ -2076,7 +2076,7 @@
 	System Info	Systeminformationen
 	More panels	Weitere Bedienfelder
 	More documents	Weitere Dokumente
-	These settings aren't available in FisiFoto yet.	Diese Einstellungen gibt es in FisiFoto noch nicht.
+	These settings aren't available in FisiLab Foto yet.	Diese Einstellungen gibt es in FisiLab Foto noch nicht.
 	Graphics	Grafik
 	Reset GPU Backend	GPU-Backend zurücksetzen
 	Applies at next launch.	Wird beim nächsten Start angewendet.
@@ -2280,7 +2280,7 @@
 	Automatic uses GPU acceleration when available and falls back to CPU rendering on errors.	Automatisch nutzt GPU-Beschleunigung, wenn verfügbar, und fällt bei Fehlern auf CPU-Rendering zurück.
 	Switched to CPU rendering	Auf CPU-Rendering umgeschaltet
 	GPU acceleration could not continue. Your documents are unchanged.	GPU-Beschleunigung konnte nicht fortgesetzt werden. Deine Dokumente sind unverändert.
-	FisiFoto is using the CPU image compositor. The window may still use your graphics adapter.	FisiFoto nutzt den CPU-Bildkompositor. Das Fenster kann weiterhin deinen Grafikadapter verwenden.
+	FisiLab Foto is using the CPU image compositor. The window may still use your graphics adapter.	FisiLab Foto nutzt den CPU-Bildkompositor. Das Fenster kann weiterhin deinen Grafikadapter verwenden.
 	Retry GPU requires a restart. Save your work first.	GPU erneut versuchen erfordert einen Neustart. Speichere zuerst deine Arbeit.
 	Keep Using CPU	CPU weiter verwenden
 	Retry GPU	GPU erneut versuchen
@@ -2514,7 +2514,7 @@ fontWeight	Italic	Kursiv
 	Color to Alpha…	Farbe zu Alpha…
 	Transparency Threshold	Transparenz-Schwellenwert
 	Opacity Threshold	Deckkraft-Schwellenwert
-	FisiFoto — Screen Color Picker	FisiFoto — Bildschirmfarbenauswahl
+	Foto — Screen Color Picker	Foto — Bildschirmfarbenauswahl
 
 	Rasterize svg groups deeper than	SVG-Gruppen ab dieser Tiefe rastern
 	0 turns this threshold off; SVG groups nested deeper than 100 levels are always rasterized.	0 schaltet diese Schwelle aus; SVG-Gruppen, die tiefer als 100 Ebenen verschachtelt sind, werden immer gerastert.
@@ -3106,7 +3106,7 @@ curves	Smooth	Glätten
 	{name} (Photoshop)	{name} (Photoshop)
 	{message} ({note})	{message} ({note})
 @plural	Loaded {n} action from {file}|Loaded {n} actions from {file}	{n} Aktion aus {file} geladen|{n} Aktionen aus {file} geladen
-@plural	{n} step has no FisiFoto equivalent yet|{n} steps have no FisiFoto equivalent yet	{n} Schritt hat noch keine Entsprechung in FisiFoto|{n} Schritte haben noch keine Entsprechung in FisiFoto
+@plural	{n} step has no FisiLab Foto equivalent yet|{n} steps have no FisiLab Foto equivalent yet	{n} Schritt hat noch keine Entsprechung in FisiLab Foto|{n} Schritte haben noch keine Entsprechung in FisiLab Foto
 @plural	Saved {n} action to {file}|Saved {n} actions to {file}	{n} Aktion in {file} gespeichert|{n} Aktionen in {file} gespeichert
 @plural	{n} step with no Photoshop equivalent left out|{n} steps with no Photoshop equivalent left out	{n} Schritt ohne Photoshop-Entsprechung ausgelassen|{n} Schritte ohne Photoshop-Entsprechung ausgelassen
 
@@ -3132,7 +3132,7 @@ curves	Smooth	Glätten
 	set in Print Settings…	in den Druckeinstellungen festlegen…
 	ICO is limited to 256 × 256 pixels	ICO ist auf 256 × 256 Pixel begrenzt
 
-# Suíte FisiLab (FisiFoto): menu items added by the FisiLab — LARFIC/UFRGS rebranding. Their source
+# Suíte FisiLab (Foto): menu items added by the FisiLab — LARFIC/UFRGS rebranding. Their source
 # text is already Brazilian Portuguese, so every catalog shows it as is.
 	Tema UFRGS Noite	Tema UFRGS Noite
 	Tema UFRGS Dia	Tema UFRGS Dia

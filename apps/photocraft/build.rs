@@ -1,4 +1,4 @@
-//! Windows only: embed the app icon and version info (VERSIONINFO) into `fisifoto.exe`
+//! Windows only: embed the app icon and version info (VERSIONINFO) into `fisilab-foto.exe`
 //! (Suíte FisiLab; the package keeps its upstream name, `photocraft`).
 //!
 //! On every other target this does nothing. A missing resource compiler is a warning, so a
@@ -7,23 +7,23 @@
 
 fn main() {
     println!("cargo:rerun-if-changed=build.rs");
-    println!("cargo:rerun-if-changed=../../assets/fisilab/fisifoto.ico");
+    println!("cargo:rerun-if-changed=../../assets/fisilab/fisilab-foto.ico");
     println!("cargo:rerun-if-env-changed=PHOTOCRAFT_REQUIRE_WINRES");
     if std::env::var("CARGO_CFG_TARGET_OS").as_deref() != Ok("windows") {
         return;
     }
     let mut res = winresource::WindowsResource::new();
-    res.set_icon("../../assets/fisilab/fisifoto.ico")
-        .set("ProductName", "FisiFoto")
-        .set("FileDescription", "FisiFoto — Editor de imagens (Suíte FisiLab)")
+    res.set_icon("../../assets/fisilab/fisilab-foto.ico")
+        .set("ProductName", "Foto")
+        .set("FileDescription", "Foto — Editor de imagens (Suíte FisiLab)")
         .set("CompanyName", "FisiLab — LARFIC/UFRGS")
         .set("LegalCopyright", "Baseado no PhotoCraft (© ArtCraft Team e contribuidores). Modificações © 2026 FisiLab — LARFIC/UFRGS. MIT OR Apache-2.0.")
-        .set("OriginalFilename", "fisifoto.exe")
-        .set("InternalName", "fisifoto");
+        .set("OriginalFilename", "fisilab-foto.exe")
+        .set("InternalName", "fisilab-foto");
     if let Err(e) = res.compile() {
         if std::env::var_os("PHOTOCRAFT_REQUIRE_WINRES").is_some() {
             panic!("embedding Windows resources failed: {e}");
         }
-        println!("cargo:warning=fisifoto.exe built without icon/version resources: {e}");
+        println!("cargo:warning=fisilab-foto.exe built without icon/version resources: {e}");
     }
 }

@@ -3,7 +3,7 @@ name = "photocraft"
 version.workspace = true
 edition.workspace = true
 license.workspace = true
-default-run = "fisifoto"
+default-run = "fisilab-foto"
 description = "Photocraft: an open-source, native image editor"
 build = "build.rs"
 
@@ -15,9 +15,9 @@ heif = ["photocraft-codecs/heif"]
 [lints]
 workspace = true
 
-# Suíte FisiLab: the GUI executable is fisifoto(.exe); the package keeps its upstream name.
+# Suíte FisiLab: the GUI executable is fisilab-foto(.exe); the package keeps its upstream name.
 [[bin]]
-name = "fisifoto"
+name = "fisilab-foto"
 path = "src/main.rs"
 
 [dependencies]
@@ -106,5 +106,5 @@ name = "mac_menu_appkit"
 harness = false
 
 [build-dependencies]
-# Icon + VERSIONINFO for fisifoto.exe; build.rs only uses it when targeting Windows.
+# Icon + VERSIONINFO for fisilab-foto.exe; build.rs only uses it when targeting Windows.
 winresource = "0.1"

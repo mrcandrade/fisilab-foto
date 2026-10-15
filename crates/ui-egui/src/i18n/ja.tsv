@@ -787,7 +787,7 @@
 	Timeline	タイムライン
 	Tool Presets	ツールプリセット
 	Tools	ツール
-	About FisiFoto	FisiFoto について
+	About Foto	Foto について
 	WIA Support…	WIA サポート…
 	Apply	適用
 	HSB/HSL	HSB/HSL
@@ -839,7 +839,7 @@
 	All Caps	すべて大文字
 	All Slices	すべてのスライス
 	All User Slices	すべてのユーザースライス
-	All shortcuts reset to FisiFoto defaults.	すべてのショートカットを初期状態に戻しました。
+	All shortcuts reset to FisiLab Foto defaults.	すべてのショートカットを初期状態に戻しました。
 	Alt	Alt
 	Alt-click to define a source point to clone from	Alt+クリックでコピー元を指定
 	Always use pressure for opacity	常に筆圧を不透明度に使う
@@ -1090,8 +1090,8 @@
 	Drop an image or PSD anywhere to open it.	画像や PSD をここにドロップすると開きます。
 	Native file drag-and-drop is unavailable	Wayland ではネイティブのファイルドラッグ＆ドロップを利用できません
 	Native file drag-and-drop is not supported on Wayland yet. Use File › Open, or copy the image in your file manager and paste it with {paste}.	Wayland ではネイティブのファイルドラッグ＆ドロップはまだ利用できません。[ファイル › 開く] を使うか、ファイルマネージャーで画像をコピーして {paste} で貼り付けてください。
-	To drop files, start FisiFoto under XWayland: `{command}`	ファイルをドロップするには、XWayland 上で FisiFoto を起動してください: `{command}`
-	Or set Preferences › Performance › Linux display server to X11: FisiFoto then always starts under XWayland.	または 環境設定 › パフォーマンス › Linux ディスプレイサーバー を X11 にすると、FisiFoto は常に XWayland 上で起動します。
+	To drop files, start FisiLab Foto under XWayland: `{command}`	ファイルをドロップするには、XWayland 上で FisiLab Foto を起動してください: `{command}`
+	Or set Preferences › Performance › Linux display server to X11: FisiLab Foto then always starts under XWayland.	または 環境設定 › パフォーマンス › Linux ディスプレイサーバー を X11 にすると、FisiLab Foto は常に XWayland 上で起動します。
 	Edit › Paste	[編集 › 貼り付け]
 	Duplicate Layers…	レイヤーを複製…
 	Duplicate style	スタイルを複製
@@ -1338,9 +1338,9 @@
 	Perspective Warp is not active	遠近法ワープは有効ではありません
 	Perspective Warp: draw planes along the image's perspective, then switch to Warp	遠近法ワープ: 画像の遠近に沿って面を描き、ワープに切り替えます
 	Photo Filter	写真フィルター
-	FisiFoto	FisiFoto
-	FisiFoto Manages Colors	FisiFoto でカラーを管理
-	FisiFoto — an open-source, native image editor written in Rust.	FisiFoto — Rust で書かれた、オープンソースのネイティブ画像エディター。
+	Foto	Foto
+	FisiLab Foto Manages Colors	FisiLab Foto でカラーを管理
+	Foto — an open-source, native image editor written in Rust.	Foto — Rust で書かれた、オープンソースのネイティブ画像エディター。
 	Pin Depth:	ピンの深さ:
 	Pixel Length:	ピクセル長:
 	Pixels/Centimeter	ピクセル/センチメートル
@@ -1415,11 +1415,11 @@
 	Import Shortcuts…	ショートカットを読み込む…
 	Load a keyboard shortcut set saved as .kys	.kys として保存されたキーボードショートカットセットを読み込みます
 	Imported {n} shortcuts from {file}. Click OK to keep them.	{file} から {n} 個のショートカットを読み込みました。OK をクリックすると保持されます。
-	{n} commands are not in FisiFoto.	{n} 個のコマンドは FisiFoto にありません。
+	{n} commands are not in FisiLab Foto.	{n} 個のコマンドは FisiLab Foto にありません。
 	Keyboard shortcuts imported	キーボードショートカットを読み込みました
 	Your keyboard shortcut set {set} is in use here: {n} shortcuts differ from the defaults. Edit › Keyboard Shortcuts shows them; Reset All to Defaults undoes this.	キーボードショートカットセット {set} をここで使用しています。{n} 個のショートカットが既定と異なります。編集 › キーボードショートカットで確認でき、「すべて既定に戻す」で元に戻せます。
 	Import keyboard shortcuts?	キーボードショートカットを読み込みますか？
-	FisiFoto found your keyboard shortcut set {set} from another image editor on this computer: {n} of its shortcuts differ from FisiFoto's. Import it?	このコンピューターで、別の画像編集アプリのキーボードショートカットセット {set} が見つかりました。{n} 個のショートカットが FisiFoto と異なります。読み込みますか？
+	FisiLab Foto found your keyboard shortcut set {set} from another image editor on this computer: {n} of its shortcuts differ from FisiLab Foto's. Import it?	このコンピューターで、別の画像編集アプリのキーボードショートカットセット {set} が見つかりました。{n} 個のショートカットが FisiLab Foto と異なります。読み込みますか？
 	Edit › Keyboard Shortcuts › Reset All to Defaults undoes an import.	編集 › キーボードショートカット › 「すべて既定に戻す」で読み込みを元に戻せます。
 	Don't Import	読み込まない
 	The keyboard shortcut set was not imported: {error}	キーボードショートカットセットは読み込まれませんでした: {error}
@@ -1645,7 +1645,7 @@
 	Current Tool	現在のツール
 	Custom Shape Tool	カスタムシェイプツール
 	Cyans	シアン系
-	Default FisiFoto Size	FisiFoto 既定サイズ
+	Default FisiLab Foto Size	FisiLab Foto 既定サイズ
 	Delete Workspace	ワークスペースを削除
 	Diamond	ダイヤモンド形
 	Dimensions:	寸法:
@@ -2090,7 +2090,7 @@
 	System Info	システム情報
 	More panels	その他のパネル
 	More documents	その他のドキュメント
-	These settings aren't available in FisiFoto yet.	これらの設定は FisiFoto ではまだ使用できません。
+	These settings aren't available in FisiLab Foto yet.	これらの設定は FisiLab Foto ではまだ使用できません。
 	Graphics	グラフィックス
 	Reset GPU Backend	GPU バックエンドをリセット
 	Applies at next launch.	次回の起動時に適用されます。
@@ -2211,7 +2211,7 @@
 	Automatic uses GPU acceleration when available and falls back to CPU rendering on errors.	自動モードは利用可能な場合にGPUを使用し、エラー時はCPU描画に切り替えます。
 	Switched to CPU rendering	CPU 描画に切り替えました
 	GPU acceleration could not continue. Your documents are unchanged.	GPU アクセラレーションを継続できませんでした。ドキュメントは変更されていません。
-	FisiFoto is using the CPU image compositor. The window may still use your graphics adapter.	FisiFoto は CPU で画像を合成しています。ウィンドウは引き続きグラフィックスアダプターを使用する場合があります。
+	FisiLab Foto is using the CPU image compositor. The window may still use your graphics adapter.	FisiLab Foto は CPU で画像を合成しています。ウィンドウは引き続きグラフィックスアダプターを使用する場合があります。
 	Retry GPU requires a restart. Save your work first.	GPU の再試行には再起動が必要です。先に作業を保存してください。
 	Keep Using CPU	CPU を使い続ける
 	Retry GPU	GPU を再試行
@@ -3365,7 +3365,7 @@ fontWeight	Italic	斜体
 	Mouse Controls	マウス操作
 	Mouse Coordinates	マウス座標
 	NTSC (1953)	NTSC (1953)
-	Native file drag-and-drop is not supported on Wayland yet. Use File › Open, or run FisiFoto under XWayland with `WAYLAND_DISPLAY= photocraft`.	Wayland ではネイティブのファイルのドラッグ&ドロップにまだ対応していません。ファイル › 開く を使うか、XWayland 上で `WAYLAND_DISPLAY= photocraft` として FisiFoto を実行してください。
+	Native file drag-and-drop is not supported on Wayland yet. Use File › Open, or run FisiLab Foto under XWayland with `WAYLAND_DISPLAY= photocraft`.	Wayland ではネイティブのファイルのドラッグ&ドロップにまだ対応していません。ファイル › 開く を使うか、XWayland 上で `WAYLAND_DISPLAY= photocraft` として FisiLab Foto を実行してください。
 	New Brush	新規ブラシ
 	New Channel	新規チャンネル
 	New Layer from Brush	ブラシから新規レイヤー
@@ -3486,7 +3486,7 @@ fontWeight	Italic	斜体
 	Color to Alpha…	カラーを透明に…
 	Transparency Threshold	透明のしきい値
 	Opacity Threshold	不透明度のしきい値
-	FisiFoto — Screen Color Picker	FisiFoto — スクリーンカラーピッカー
+	Foto — Screen Color Picker	Foto — スクリーンカラーピッカー
 
 	Rasterize svg groups deeper than	この深さを超える SVG グループをラスタライズ
 	0 turns this threshold off; SVG groups nested deeper than 100 levels are always rasterized.	0 でこのしきい値は無効になります。100 階層を超えて入れ子になった SVG グループは常にラスタライズされます。
@@ -3714,7 +3714,7 @@ curves	Smooth	スムーズ
 	{name} (Photoshop)	{name}（Photoshop）
 	{message} ({note})	{message}（{note}）
 @plural	Loaded {n} action from {file}|Loaded {n} actions from {file}	{file} からアクション {n} 個を読み込みました
-@plural	{n} step has no FisiFoto equivalent yet|{n} steps have no FisiFoto equivalent yet	{n} 個のステップにはまだ FisiFoto の対応機能がありません
+@plural	{n} step has no FisiLab Foto equivalent yet|{n} steps have no FisiLab Foto equivalent yet	{n} 個のステップにはまだ FisiLab Foto の対応機能がありません
 @plural	Saved {n} action to {file}|Saved {n} actions to {file}	{file} にアクション {n} 個を保存しました
 @plural	{n} step with no Photoshop equivalent left out|{n} steps with no Photoshop equivalent left out	Photoshop に対応するもののない {n} 個のステップを省きました
 
@@ -3810,7 +3810,7 @@ curves	Smooth	スムーズ
 	Copy Texture to Other Tools	テクスチャを他のツールにコピー
 	ICO is limited to 256 × 256 pixels	ICO は 256 × 256 ピクセルまでです
 
-# Suíte FisiLab (FisiFoto): menu items added by the FisiLab — LARFIC/UFRGS rebranding. Their source
+# Suíte FisiLab (Foto): menu items added by the FisiLab — LARFIC/UFRGS rebranding. Their source
 # text is already Brazilian Portuguese, so every catalog shows it as is.
 	Tema UFRGS Noite	Tema UFRGS Noite
 	Tema UFRGS Dia	Tema UFRGS Dia

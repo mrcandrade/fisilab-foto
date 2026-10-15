@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
   Overrides for the setup wizard's WixUI strings, so its pages name the version being installed
-  ([FisiFotoVersion] is the full version, pre-release tag included, set in photocraft.wxs (FisiFoto)).
+  ([FotoVersion] is the full version, pre-release tag included, set in photocraft.wxs (Foto)).
 -->
 <WixLocalization Culture="en-US" xmlns="http://wixtoolset.org/schemas/v4/wxl">
-  <String Id="WelcomeDlgTitle" Value="{\WixUI_Font_Bigger}Welcome to the [ProductName] [FisiFotoVersion] Setup Wizard" />
-  <String Id="WelcomeDlgDescription" Value="The Setup Wizard will install [ProductName] version [FisiFotoVersion] on your computer. Click Next to continue or Cancel to exit the Setup Wizard." />
-  <String Id="VerifyReadyDlgInstallTitle" Value="{\WixUI_Font_Title}Ready to install [ProductName] [FisiFotoVersion]" />
-  <String Id="ExitDialogTitle" Value="{\WixUI_Font_Bigger}Completed the [ProductName] [FisiFotoVersion] Setup Wizard" />
+  <String Id="WelcomeDlgTitle" Value="{\WixUI_Font_Bigger}Welcome to the [ProductName] [FotoVersion] Setup Wizard" />
+  <String Id="WelcomeDlgDescription" Value="The Setup Wizard will install [ProductName] version [FotoVersion] on your computer. Click Next to continue or Cancel to exit the Setup Wizard." />
+  <String Id="VerifyReadyDlgInstallTitle" Value="{\WixUI_Font_Title}Ready to install [ProductName] [FotoVersion]" />
+  <String Id="ExitDialogTitle" Value="{\WixUI_Font_Bigger}Completed the [ProductName] [FotoVersion] Setup Wizard" />
 </WixLocalization>

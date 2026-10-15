@@ -1,4 +1,4 @@
-//! FisiFoto's UI shell (Suíte FisiLab; based on PhotoCraft's), built on egui/eframe.
+//! Foto's UI shell (Suíte FisiLab; based on PhotoCraft's), built on egui/eframe.
 //!
 //! This crate is deliberately thin. Every action goes through
 //! [`photocraft_engine::Session::execute`], and all UI state lives in [`state::UiState`] (plain
@@ -239,10 +239,10 @@ use photocraft_doc::{DocId, Document};
 use photocraft_engine::Session;
 use serde_json::{Value, json};
 
-/// What FisiFoto tells the Suíte FisiLab brand crate about itself: the splash, the "Sobre a Suíte
+/// What Foto tells the Suíte FisiLab brand crate about itself: the splash, the "Sobre a Suíte
 /// FisiLab" window and its credits to the original project read this.
 pub const APP_INFO: fisilab_brand::AppInfo = fisilab_brand::AppInfo {
-    name: "FisiFoto",
+    name: "Foto",
     tagline: "Editor de imagens",
     equivalent: "Adobe Photoshop",
     version: env!("CARGO_PKG_VERSION"),

@@ -525,7 +525,7 @@
 	Hide All	Скрыть все
 
 # Help
-	About FisiFoto	О программе FisiFoto
+	About Foto	О программе Foto
 	System Info…	Информация о системе…
 
 # Tools and options bar
@@ -603,11 +603,11 @@
 	Import Shortcuts…	Импортировать сочетания клавиш…
 	Load a keyboard shortcut set saved as .kys	Загрузить набор сочетаний клавиш, сохранённый как .kys
 	Imported {n} shortcuts from {file}. Click OK to keep them.	Импортировано сочетаний: {n} из {file}. Нажмите OK, чтобы сохранить их.
-	{n} commands are not in FisiFoto.	Команд, которых нет в FisiFoto: {n}.
+	{n} commands are not in FisiLab Foto.	Команд, которых нет в FisiLab Foto: {n}.
 	Keyboard shortcuts imported	Сочетания клавиш импортированы
 	Your keyboard shortcut set {set} is in use here: {n} shortcuts differ from the defaults. Edit › Keyboard Shortcuts shows them; Reset All to Defaults undoes this.	Здесь используется ваш набор сочетаний клавиш {set}: сочетаний, отличных от стандартных: {n}. Их показывает Редактирование › Сочетания клавиш; «Сбросить всё к значениям по умолчанию» отменяет импорт.
 	Import keyboard shortcuts?	Импортировать сочетания клавиш?
-	FisiFoto found your keyboard shortcut set {set} from another image editor on this computer: {n} of its shortcuts differ from FisiFoto's. Import it?	FisiFoto нашёл на этом компьютере ваш набор сочетаний клавиш {set} из другого графического редактора: сочетаний, отличных от FisiFoto: {n}. Импортировать его?
+	FisiLab Foto found your keyboard shortcut set {set} from another image editor on this computer: {n} of its shortcuts differ from FisiLab Foto's. Import it?	FisiLab Foto нашёл на этом компьютере ваш набор сочетаний клавиш {set} из другого графического редактора: сочетаний, отличных от FisiLab Foto: {n}. Импортировать его?
 	Edit › Keyboard Shortcuts › Reset All to Defaults undoes an import.	Редактирование › Сочетания клавиш › «Сбросить всё к значениям по умолчанию» отменяет импорт.
 	Don't Import	Не импортировать
 	The keyboard shortcut set was not imported: {error}	Набор сочетаний клавиш не импортирован: {error}
@@ -912,7 +912,7 @@
 	Embed Color Profile	Встроить цветовой профиль
 	Assign Profile…	Назначить профиль…
 	Convert to Profile…	Преобразовать в профиль…
-	FisiFoto Manages Colors	FisiFoto управляет цветами
+	FisiLab Foto Manages Colors	FisiLab Foto управляет цветами
 	Printer Manages Colors	Принтер управляет цветами
 	(print to the printer)	(печать на принтере)
 	Absolute Colorimetric	Абсолютный колориметрический
@@ -1502,15 +1502,15 @@
 	Use File › Open, or paste a copied image with {paste}.	Выберите Файл › Открыть или вставьте скопированное изображение с помощью {paste}.
 	Native file drag-and-drop is unavailable	Нативное перетаскивание файлов в Wayland недоступно
 	Native file drag-and-drop is not supported on Wayland yet. Use File › Open, or copy the image in your file manager and paste it with {paste}.	Нативное перетаскивание файлов в Wayland пока не поддерживается. Откройте файл через Файл › Открыть или скопируйте изображение в файловом менеджере и вставьте его с помощью {paste}.
-	To drop files, start FisiFoto under XWayland: `{command}`	Чтобы перетаскивать файлы, запустите FisiFoto в XWayland: `{command}`
-	Or set Preferences › Performance › Linux display server to X11: FisiFoto then always starts under XWayland.	Или выберите в Настройки › Производительность › Дисплейный сервер Linux значение X11: FisiFoto будет всегда запускаться в XWayland.
+	To drop files, start FisiLab Foto under XWayland: `{command}`	Чтобы перетаскивать файлы, запустите FisiLab Foto в XWayland: `{command}`
+	Or set Preferences › Performance › Linux display server to X11: FisiLab Foto then always starts under XWayland.	Или выберите в Настройки › Производительность › Дисплейный сервер Linux значение X11: FisiLab Foto будет всегда запускаться в XWayland.
 	Edit › Paste	Редактирование › Вставить
 	Photo	Фото
 	Print	Печать
 	Art & Illustration	Искусство и иллюстрация
 	Mobile	Мобильные
 	Film & Video	Кино и видео
-	Default FisiFoto Size	Размер FisiFoto по умолчанию
+	Default FisiLab Foto Size	Размер FisiLab Foto по умолчанию
 	Clipboard	Буфер обмена
 	Photo (2 × 3 in)	Фото (2 × 3 дюйма)
 	Photo (4 × 6 in)	Фото (4 × 6 дюйма)
@@ -1684,9 +1684,9 @@
 	Don't Save	Не сохранять
 	No	Нет
 	Yes	Да
-	These settings aren't available in FisiFoto yet.	Эти параметры пока недоступны в FisiFoto.
+	These settings aren't available in FisiLab Foto yet.	Эти параметры пока недоступны в FisiLab Foto.
 	Shortcut removed.	Комбинация клавиш удалена.
-	All shortcuts reset to FisiFoto defaults.	Все комбинации клавиш сброшены к стандартным FisiFoto.
+	All shortcuts reset to FisiLab Foto defaults.	Все комбинации клавиш сброшены к стандартным FisiLab Foto.
 	Delete Shortcut	Удалить комбинацию
 	Press keys…	Нажмите клавиши…
 	shortcut	комбинация
@@ -2167,8 +2167,8 @@
 	Output:	Выход:
 	Paint Overlay	Перекрытие краской
 	Pattern Size	Размер паттерна
-	FisiFoto	FisiFoto
-	FisiFoto — an open-source, native image editor written in Rust.	FisiFoto — открытый нативный графический редактор на Rust.
+	Foto	Foto
+	Foto — an open-source, native image editor written in Rust.	Foto — открытый нативный графический редактор на Rust.
 	Position and Size	Положение и размер
 	Preserve Details	Сохранять детали
 	Preserve Luminosity	Сохранять светлоту
@@ -2493,7 +2493,7 @@
 	Automatic uses GPU acceleration when available and falls back to CPU rendering on errors.	Автоматический режим использует GPU, когда он доступен, и переходит на CPU при ошибках.
 	Switched to CPU rendering	Включена отрисовка на CPU
 	GPU acceleration could not continue. Your documents are unchanged.	Ускорение GPU остановлено. Документы не изменены.
-	FisiFoto is using the CPU image compositor. The window may still use your graphics adapter.	FisiFoto обрабатывает изображения на CPU. Окно может продолжать использовать графический адаптер.
+	FisiLab Foto is using the CPU image compositor. The window may still use your graphics adapter.	FisiLab Foto обрабатывает изображения на CPU. Окно может продолжать использовать графический адаптер.
 	Retry GPU requires a restart. Save your work first.	Для повтора GPU нужен перезапуск. Сначала сохраните работу.
 	Keep Using CPU	Продолжить с CPU
 	Retry GPU	Повторить GPU
@@ -2742,7 +2742,7 @@ fontWeight	Italic	Курсив
 	Color to Alpha…	Цвет в альфа-канал…
 	Transparency Threshold	Порог прозрачности
 	Opacity Threshold	Порог непрозрачности
-	FisiFoto — Screen Color Picker	FisiFoto — Пипетка цвета экрана
+	Foto — Screen Color Picker	Foto — Пипетка цвета экрана
 
 	Rasterize svg groups deeper than	Растеризовать группы SVG глубже этого уровня
 	0 turns this threshold off; SVG groups nested deeper than 100 levels are always rasterized.	0 отключает этот порог; группы SVG с вложенностью более 100 уровней всегда растрируются.
@@ -3055,7 +3055,7 @@ curves	Smooth	Сгладить
 	{name} (Photoshop)	{name} (Photoshop)
 	{message} ({note})	{message} ({note})
 @plural	Loaded {n} action from {file}|Loaded {n} actions from {file}	Загружена {n} операция из {file}|Загружены {n} операции из {file}|Загружено {n} операций из {file}
-@plural	{n} step has no FisiFoto equivalent yet|{n} steps have no FisiFoto equivalent yet	{n} шаг пока не имеет эквивалента в FisiFoto|{n} шага пока не имеют эквивалента в FisiFoto|{n} шагов пока не имеют эквивалента в FisiFoto
+@plural	{n} step has no FisiLab Foto equivalent yet|{n} steps have no FisiLab Foto equivalent yet	{n} шаг пока не имеет эквивалента в FisiLab Foto|{n} шага пока не имеют эквивалента в FisiLab Foto|{n} шагов пока не имеют эквивалента в FisiLab Foto
 @plural	Saved {n} action to {file}|Saved {n} actions to {file}	Сохранена {n} операция в {file}|Сохранены {n} операции в {file}|Сохранено {n} операций в {file}
 @plural	{n} step with no Photoshop equivalent left out|{n} steps with no Photoshop equivalent left out	Пропущен {n} шаг без эквивалента в Photoshop|Пропущены {n} шага без эквивалента в Photoshop|Пропущено {n} шагов без эквивалента в Photoshop
 
@@ -3101,7 +3101,7 @@ curves	Smooth	Сгладить
 	Integrated Density	Интегральная плотность
 	Length	Длина
 
-# Suíte FisiLab (FisiFoto): menu items added by the FisiLab — LARFIC/UFRGS rebranding. Their source
+# Suíte FisiLab (Foto): menu items added by the FisiLab — LARFIC/UFRGS rebranding. Their source
 # text is already Brazilian Portuguese, so every catalog shows it as is.
 	Tema UFRGS Noite	Tema UFRGS Noite
 	Tema UFRGS Dia	Tema UFRGS Dia

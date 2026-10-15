@@ -1,5 +1,5 @@
 > **Nota (Suíte FisiLab):** este é o README original do PhotoCraft, mantido como histórico e
-> crédito. O FisiFoto é uma versão modificada dele; veja [README.md](README.md) e
+> crédito. O Foto é uma versão modificada dele; veja [README.md](README.md) e
 > [MODIFICACOES.md](MODIFICACOES.md). As logos e a marca ArtCraft (`docs/brand/`) foram removidas
 > deste fork, como pede o NOTICE original, e por isso não aparecem abaixo.
 

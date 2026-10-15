@@ -1,10 +1,10 @@
-FisiFoto — modo portátil (Suíte FisiLab)
+Foto — modo portátil (Suíte FisiLab)
 
-Enquanto este arquivo estiver ao lado de fisifoto.exe, o FisiFoto guarda as preferências, as
+Enquanto este arquivo estiver ao lado de fisilab-foto.exe, o Foto guarda as preferências, as
 predefinições de pincel, os salvamentos automáticos de recuperação e o estado de inicialização na
-pasta FisiFotoData ao lado dele, e não grava nada em %APPDATA%. Copie a pasta inteira para levar o
-FisiFoto com as suas configurações.
+pasta FisiLabFotoData ao lado dele, e não grava nada em %APPDATA%. Copie a pasta inteira para levar o
+Foto com as suas configurações.
 
 Apague este arquivo para usar a pasta normal de configurações do usuário
-(%APPDATA%\FisiLab\FisiFoto). Se a pasta FisiFotoData não puder ser gravada (por exemplo, num
-pendrive somente leitura), o FisiFoto avisa e usa %APPDATA%\FisiLab\FisiFoto.
+(%APPDATA%\FisiLab\Foto). Se a pasta FisiLabFotoData não puder ser gravada (por exemplo, num
+pendrive somente leitura), o Foto avisa e usa %APPDATA%\FisiLab\Foto.

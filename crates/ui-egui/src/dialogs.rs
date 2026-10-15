@@ -503,7 +503,7 @@ fn about_tab_body(app: &mut PhotocraftApp, ui: &mut egui::Ui, tab: &str) {
         "contributors" => crate::credits::contributors_ui(app, ui),
         "models" => crate::credits::models_ui(ui),
         _ => {
-            ui.label(tl!("FisiFoto — an open-source, native image editor written in Rust."));
+            ui.label(tl!("Foto — an open-source, native image editor written in Rust."));
             ui.label(crate::i18n::fmt(tl!("Version {version}"), &[("version", &photocraft_engine::build_info::long_version())]));
             // Suíte FisiLab: who made the original, and who distributes this version.
             ui.add_space(6.0);
@@ -545,7 +545,7 @@ pub fn title(d: &Dialog) -> String {
     match d.kind {
         DialogKind::NewDocument => "New Document".into(),
         DialogKind::About if d.fields.get("systemInfo").and_then(Value::as_bool) == Some(true) => "System Info".into(),
-        DialogKind::About => "About FisiFoto".into(),
+        DialogKind::About => "About Foto".into(),
         DialogKind::LayerStyle => "Layer Style".into(),
         DialogKind::Command => d.fields.get("__label").and_then(Value::as_str).unwrap_or("Command").trim_end_matches('…').to_string(),
         DialogKind::Error => "Error".into(),

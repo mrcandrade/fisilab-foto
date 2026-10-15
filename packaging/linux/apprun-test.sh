@@ -8,7 +8,7 @@ set -euo pipefail
 
 HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ROOT="$(cd "$HERE/../.." && pwd)"
-APP_ID=ai.storyteller.photocraft
+APP_ID=br.ufrgs.fisilab.foto
 
 TMP="$(mktemp -d)"
 trap 'rm -rf "$TMP"' EXIT
@@ -18,10 +18,11 @@ APPDIR="$TMP/PhotoCraft.AppDir"
 mkdir -p "$APPDIR/usr/bin"
 install -Dm755 "$HERE/AppRun" "$APPDIR/AppRun"
 install -Dm644 "$HERE/$APP_ID.desktop" "$APPDIR/usr/share/applications/$APP_ID.desktop"
-mkdir -p "$APPDIR/usr/share/icons"
-cp -R "$ROOT/assets/app-icon/hicolor" "$APPDIR/usr/share/icons/"
-printf '#!/bin/sh\necho "stub: $*"\n' >"$APPDIR/usr/bin/photocraft"
-chmod +x "$APPDIR/usr/bin/photocraft"
+for n in 16 256; do
+  install -Dm644 "$ROOT/assets/fisilab/fisilab-foto-$n.png" "$APPDIR/usr/share/icons/hicolor/${n}x${n}/apps/$APP_ID.png"
+done
+printf '#!/bin/sh\necho "stub: $*"\n' >"$APPDIR/usr/bin/fisilab-foto"
+chmod +x "$APPDIR/usr/bin/fisilab-foto"
 
 APPIMAGE="$TMP/photocraft test.AppImage" # spaces on purpose: Exec must stay quoted
 : >"$APPIMAGE"
@@ -55,7 +56,7 @@ if command -v desktop-file-validate >/dev/null; then
 fi
 
 # 3. Icons landed under the name the .desktop entry references.
-for f in "16x16/apps/$APP_ID.png" "256x256/apps/$APP_ID.png" "scalable/apps/$APP_ID.svg"; do
+for f in "16x16/apps/$APP_ID.png" "256x256/apps/$APP_ID.png"; do
   [ -f "$XDG_DATA_HOME/icons/hicolor/$f" ] || fail "icon missing: $f"
 done
 

@@ -2,34 +2,34 @@
 <!-- AppStream metadata (software centres, Flathub). Template: package.sh and the Flatpak
      manifest substitute @VERSION@ and @DATE@ from Cargo.toml and the build date. -->
 <component type="desktop-application">
-  <id>ai.storyteller.photocraft</id>
+  <id>br.ufrgs.fisilab.foto</id>
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>MIT OR Apache-2.0</project_license>
-  <name>PhotoCraft</name>
-  <summary>Edit photos and layered PSD documents</summary>
-  <developer id="ai.storyteller">
-    <name>Learning Machines LLC</name>
+  <name>Foto</name>
+  <summary>Editor de imagens — Suíte FisiLab (alternativa livre)</summary>
+  <developer id="br.ufrgs.fisilab">
+    <name>FisiLab — LARFIC</name>
   </developer>
   <description>
     <p>
-      PhotoCraft is an open-source, native image editor with the familiar menus,
-      shortcuts, panels and tools professionals expect: layers, masks, adjustment
-      layers, layer styles, type and brushes.
+      O Foto é um editor de imagens nativo e livre, da Suíte FisiLab, com os menus, atalhos,
+      painéis e ferramentas que se espera de um editor profissional: camadas, máscaras,
+      camadas de ajuste, estilos de camada, texto e pincéis.
     </p>
     <ul>
-      <li>Open, edit and save layered PSD and PSB files</li>
-      <li>8-bit, 16-bit and 32-bit float documents in RGB, grayscale, CMYK and Lab</li>
-      <li>A GPU compositor with multithreaded filters</li>
-      <li>Every action is a command, scriptable from a CLI, a JSON control channel and an MCP server</li>
+      <li>Abre, edita e salva arquivos PSD e PSB em camadas</li>
+      <li>Documentos de 8, 16 e 32 bits em RGB, tons de cinza, CMYK e Lab</li>
+      <li>Compositor na GPU com filtros em várias threads</li>
     </ul>
+    <p>
+      Baseado no PhotoCraft, do ArtCraft Team e contribuidores (MIT ou Apache 2.0).
+    </p>
   </description>
-  <launchable type="desktop-id">ai.storyteller.photocraft.desktop</launchable>
-  <icon type="stock">ai.storyteller.photocraft</icon>
+  <launchable type="desktop-id">br.ufrgs.fisilab.foto.desktop</launchable>
+  <icon type="stock">br.ufrgs.fisilab.foto</icon>
   <!-- Only url types known to appstream 0.15 (Ubuntu 22.04, where CI validates): no vcs-browser. -->
-  <url type="homepage">https://github.com/mrcandrade/larfic/tree/main/suite-fisilab</url>
+  <url type="homepage">https://github.com/mrcandrade/larfic</url>
   <url type="bugtracker">https://github.com/mrcandrade/fisilab-foto/issues</url>
-  <url type="help">https://github.com/mrcandrade/fisilab-foto</url>
-  <url type="contact">https://github.com/mrcandrade/fisilab-foto/issues</url>
   <categories>
     <category>Graphics</category>
     <category>RasterGraphics</category>
@@ -41,12 +41,6 @@
     <keyword>psd</keyword>
     <keyword>layers</keyword>
   </keywords>
-  <screenshots>
-    <screenshot type="default">
-      <caption>Editing The Great Wave off Kanagawa with type layers and adjustment layers</caption>
-      <image>https://raw.githubusercontent.com/storytold/photocraft/main/docs/images/photocraft-demo.jpg</image>
-    </screenshot>
-  </screenshots>
   <branding>
     <color type="primary" scheme_preference="light">#9fd0ff</color>
     <color type="primary" scheme_preference="dark">#1f64ba</color>
@@ -60,7 +54,7 @@
     <control>tablet</control>
   </supports>
   <provides>
-    <binary>photocraft</binary>
+    <binary>fisilab-foto</binary>
     <mediatype>application/x-photocraft</mediatype>
     <mediatype>image/x-paintnet</mediatype>
     <mediatype>image/openraster</mediatype>

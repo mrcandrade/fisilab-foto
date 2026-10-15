@@ -3,7 +3,7 @@
 # exports VERSION and NFPM_ARCH.
 #
 #   nfpm package -f packaging/linux/nfpm.yaml -p deb -t dist/release/
-name: photocraft
+name: fisilab-foto
 arch: ${NFPM_ARCH}
 platform: linux
 version: ${VERSION}
@@ -12,15 +12,16 @@ version_schema: semver
 release: 1
 section: graphics
 priority: optional
-maintainer: ${PHOTOCRAFT_MAINTAINER}
-vendor: FisiLab — LARFIC/UFRGS
-homepage: https://github.com/mrcandrade/larfic/tree/main/suite-fisilab
+maintainer: "FisiLab - LARFIC/UFRGS <mrcandrade@users.noreply.github.com>"
+vendor: FisiLab - LARFIC/UFRGS
+homepage: https://github.com/mrcandrade/larfic
 license: MIT OR Apache-2.0
 description: |-
-  Open-source, native image editor with familiar, professional tools.
-  Layers, masks, adjustment layers, layer styles, type and brushes; opens and
-  saves layered PSD/PSB files; 8/16/32-bit documents; GPU compositing (wgpu).
-  Includes photocraft-cli, a headless converter and command runner.
+  Foto: editor de imagens nativo e livre, da Suíte FisiLab (alternativa livre).
+  Camadas, máscaras, camadas de ajuste, estilos de camada, texto e pincéis; abre e
+  salva arquivos PSD/PSB em camadas; documentos de 8/16/32 bits; composição na GPU.
+  Baseado no PhotoCraft, do ArtCraft Team e contribuidores (MIT ou Apache 2.0).
+  Inclui fisilab-foto-cli, um conversor e executor de comandos sem janela.
 
 # The binaries link only glibc and libgcc_s directly. Windowing (X11/Wayland, xkbcommon) and the
 # GPU (Vulkan, EGL/GL) are loaded at runtime with dlopen, so they aren't ELF NEEDED entries and
@@ -66,11 +67,11 @@ overrides:
       - xdg-desktop-portal
 
 contents:
-  - src: ${STAGE}/usr/bin/photocraft
-    dst: /usr/bin/photocraft
+  - src: ${STAGE}/usr/bin/fisilab-foto
+    dst: /usr/bin/fisilab-foto
     file_info: { mode: 0755 }
-  - src: ${STAGE}/usr/bin/photocraft-cli
-    dst: /usr/bin/photocraft-cli
+  - src: ${STAGE}/usr/bin/fisilab-foto-cli
+    dst: /usr/bin/fisilab-foto-cli
     file_info: { mode: 0755 }
   - src: ${STAGE}/usr/share/
     dst: /usr/share/

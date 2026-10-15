@@ -49,6 +49,13 @@ Baixe o instalador `FisiLab-Foto-Setup-<versão>.exe` na [página de downloads d
 O Foto abre em português do Brasil, com a paleta original do PhotoCraft (tema **Noite**; o tema claro **Dia** e os
 demais temas estão em *Janela › Tema*).
 
+### Linux
+
+Baixe `FisiLab-Foto-<versão>-x86_64.AppImage` na [página de downloads da Suíte FisiLab](https://github.com/mrcandrade/larfic/releases/latest),
+marque-o como executável (`chmod +x` ou Propriedades › Permitir executar) e abra-o. No Ubuntu/Debian também é possível
+instalar o pacote `fisilab-foto_<versão>_amd64.deb` com `sudo apt install ./fisilab-foto_<versão>_amd64.deb`.
+Requer Ubuntu 22.04 ou mais recente (ou equivalente).
+
 ### Compilar a partir do código
 
 É preciso ter o [Rust](https://www.rust-lang.org/pt-BR/tools/install) instalado.

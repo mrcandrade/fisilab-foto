@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
-# Build and package PhotoCraft for Linux (<arch> is x86_64, aarch64 or riscv64):
+# Build and package FisiLab Foto (upstream: PhotoCraft) for Linux (<arch> is x86_64, aarch64 or riscv64):
 #
-#   $DIST/photocraft-<version>-linux-<arch>.AppImage  any distro with glibc >= the build host's
-#   $DIST/photocraft-<version>-linux-<arch>.AppImage.zsync  delta updates (needs zsyncmake)
-#   $DIST/photocraft-<version>-linux-<arch>.deb       Debian, Ubuntu, Mint, Pop!_OS, ...
-#   $DIST/photocraft-<version>-linux-<arch>.rpm       Fedora, openSUSE, RHEL, ...
-#   $DIST/photocraft-<version>-linux-<arch>.tar.gz    plain FHS-style tree (bin/, share/)
+#   $DIST/FisiLab-Foto-<version>-<arch>.AppImage  any distro with glibc >= the build host's
+#   $DIST/FisiLab-Foto-<version>-<arch>.AppImage.zsync  delta updates (needs zsyncmake)
+#   $DIST/fisilab-foto_<version>_<deb-arch>.deb       Debian, Ubuntu, Mint, Pop!_OS, ...
+#   $DIST/fisilab-foto-<version>-linux-<arch>.rpm       Fedora, openSUSE, RHEL, ...
+#   $DIST/fisilab-foto-<version>-linux-<arch>.tar.gz    plain FHS-style tree (bin/, share/)
 #
-# Usage: packaging/linux/package.sh [--skip-build] [--formats "appimage deb rpm tar"]
+# Usage: packaging/linux/package.sh [--skip-build] [--formats "appimage deb"] (also: rpm tar)
 #
 # Needs: cargo; nfpm for deb/rpm (https://nfpm.goreleaser.com). By default AppImage tooling
 # is downloaded at verified pins into $CARGO_TARGET_DIR. Build on an old distro (CI: Ubuntu 22.04,
@@ -23,10 +23,11 @@ set -euo pipefail
 HERE="$ROOT/packaging/linux"
 # shellcheck source=verified-download.sh
 . "$HERE/verified-download.sh"
-APP_ID=ai.storyteller.photocraft
+APP_ID=br.ufrgs.fisilab.foto
+SLUG=fisilab-foto
 
 SKIP_BUILD=0
-FORMATS="appimage deb rpm tar"
+FORMATS="appimage deb"
 while [ $# -gt 0 ]; do
   case "$1" in
     --skip-build) SKIP_BUILD=1; shift ;;
@@ -43,10 +44,12 @@ case "$ARCH" in
   aarch64 | arm64) ARCH=aarch64; DEB_ARCH=arm64 ;;
   *) echo "unsupported architecture $ARCH" >&2; exit 2 ;;
 esac
-export PHOTOCRAFT_MAINTAINER="${PHOTOCRAFT_MAINTAINER:-PhotoCraft maintainers <photocraft@storyteller.ai>}"
-BASENAME="photocraft-$VERSION-linux-$ARCH"
+export PHOTOCRAFT_MAINTAINER="${PHOTOCRAFT_MAINTAINER:-FisiLab - LARFIC/UFRGS <mrcandrade@users.noreply.github.com>}"
+BASENAME="$SLUG-$VERSION-linux-$ARCH"
+APPIMAGE_NAME="FisiLab-Foto-$VERSION-$ARCH.AppImage"
+DEB_NAME="${SLUG}_${VERSION}_$DEB_ARCH.deb"
 
-echo "==> PhotoCraft $VERSION for Linux $ARCH ($FORMATS)"
+echo "==> FisiLab Foto $VERSION for Linux $ARCH ($FORMATS)"
 
 if [ "$SKIP_BUILD" = 0 ]; then
   if [ -n "${CROSS_TARGET:-}" ]; then
@@ -61,18 +64,22 @@ STAGE="$WORK/root"
 rm -rf "$WORK"
 
 # ---- stage an FHS tree (shared by every format) -------------------------------------------------
-install -Dm755 "$BIN/photocraft" "$STAGE/usr/bin/photocraft"
-install -Dm755 "$BIN/photocraft-cli" "$STAGE/usr/bin/photocraft-cli"
-"${CROSS_COMPILE:-}strip" "$STAGE/usr/bin/photocraft" "$STAGE/usr/bin/photocraft-cli" 2>/dev/null || true
+install -Dm755 "$BIN/$SLUG" "$STAGE/usr/bin/$SLUG"
+install -Dm755 "$BIN/$SLUG-cli" "$STAGE/usr/bin/$SLUG-cli"
+"${CROSS_COMPILE:-}strip" "$STAGE/usr/bin/$SLUG" "$STAGE/usr/bin/$SLUG-cli" 2>/dev/null || true
 install -Dm644 "$HERE/$APP_ID.desktop" "$STAGE/usr/share/applications/$APP_ID.desktop"
 install -Dm644 "$HERE/$APP_ID.mime.xml" "$STAGE/usr/share/mime/packages/$APP_ID.xml"
 mkdir -p "$STAGE/usr/share/metainfo"
 sed -e "s/@VERSION@/$VERSION/g" -e "s/@DATE@/$PHOTOCRAFT_BUILD_DATE/g" \
   "$HERE/$APP_ID.metainfo.xml.in" >"$STAGE/usr/share/metainfo/$APP_ID.metainfo.xml"
-mkdir -p "$STAGE/usr/share/icons"
-cp -R "$ROOT/assets/app-icon/hicolor" "$STAGE/usr/share/icons/"
-mkdir -p "$STAGE/usr/share/doc/photocraft"
-copy_docs "$STAGE/usr/share/doc/photocraft"
+for n in 16 24 32 48 64 128 256 512; do
+  install -Dm644 "$ROOT/assets/fisilab/$SLUG-$n.png" "$STAGE/usr/share/icons/hicolor/${n}x${n}/apps/$APP_ID.png"
+done
+mkdir -p "$STAGE/usr/share/doc/$SLUG"
+copy_docs "$STAGE/usr/share/doc/$SLUG"
+for f in NOTICE ATTRIBUTION.md MODIFICACOES.md; do
+  if [ -f "$ROOT/$f" ]; then cp "$ROOT/$f" "$STAGE/usr/share/doc/$SLUG/"; fi
+done
 
 if command -v desktop-file-validate >/dev/null; then
   desktop-file-validate "$STAGE/usr/share/applications/$APP_ID.desktop"
@@ -98,14 +105,13 @@ if has deb || has rpm; then
   export NFPM_ARCH="$DEB_ARCH"
   # nfpm expands env vars in fields like `version` and `arch`, but not in `contents[].src`.
   sed "s|\${STAGE}|$STAGE|g" "$HERE/nfpm.yaml" >"$WORK/nfpm.yaml"
-  for fmt in deb rpm; do
-    if has "$fmt"; then (cd "$ROOT" && nfpm package -f "$WORK/nfpm.yaml" -p "$fmt" -t "$DIST/$BASENAME.$fmt"); fi
-  done
+  if has deb; then (cd "$ROOT" && nfpm package -f "$WORK/nfpm.yaml" -p deb -t "$DIST/$DEB_NAME"); echo "wrote $DIST/$DEB_NAME"; fi
+  if has rpm; then (cd "$ROOT" && nfpm package -f "$WORK/nfpm.yaml" -p rpm -t "$DIST/$BASENAME.rpm"); fi
 fi
 
 # ---- AppImage -----------------------------------------------------------------------------------
 if has appimage; then
-  APPDIR="$WORK/PhotoCraft.AppDir"
+  APPDIR="$WORK/FisiLab-Foto.AppDir"
   cp -R "$STAGE" "$APPDIR"
   mv "$APPDIR/usr/share/doc" "$WORK/doc-unused"
   # AppRun is a script, not a symlink: it installs the .desktop entry and icons into
@@ -114,7 +120,7 @@ if has appimage; then
   # script header). Logic is covered by packaging/linux/apprun-test.sh.
   install -Dm755 "$HERE/AppRun" "$APPDIR/AppRun"
   cp "$HERE/$APP_ID.desktop" "$APPDIR/$APP_ID.desktop"
-  cp "$ROOT/assets/app-icon/hicolor/256x256/apps/$APP_ID.png" "$APPDIR/$APP_ID.png"
+  cp "$ROOT/assets/fisilab/$SLUG-256.png" "$APPDIR/$APP_ID.png"
   ln -s "$APP_ID.png" "$APPDIR/.DirIcon"
 
   # Digests from the official GitHub release asset metadata:
@@ -149,7 +155,7 @@ if has appimage; then
     "$RUNTIME" "$RUNTIME_SHA256"
   # Absolute, because appimagetool runs in $DIST below (CARGO_TARGET_DIR or APPIMAGETOOL may be
   # relative, e.g. target/agent-<name>).
-  OUT="$(cd "$DIST" && pwd)/$BASENAME.AppImage"
+  OUT="$(cd "$DIST" && pwd)/$APPIMAGE_NAME"
   APPDIR="$(cd "$APPDIR" && pwd)"
   TOOL="$(cd "$(dirname "$TOOL")" && pwd)/$(basename "$TOOL")"
   RUNTIME="$(cd "$(dirname "$RUNTIME")" && pwd)/$(basename "$RUNTIME")"
@@ -159,8 +165,8 @@ if has appimage; then
   # file and fetch only the blocks that changed in a newer release, through the .zsync published
   # next to each AppImage on GitHub Releases. `latest` is the newest published release that is
   # not a pre-release. A fork's builds point at its own releases through GITHUB_REPOSITORY.
-  REPO="${GITHUB_REPOSITORY:-storytold/photocraft}"
-  UPDATE_INFO="gh-releases-zsync|${REPO%%/*}|${REPO#*/}|latest|photocraft-*-linux-$ARCH.AppImage.zsync"
+  REPO="${GITHUB_REPOSITORY:-mrcandrade/larfic}"
+  UPDATE_INFO="gh-releases-zsync|${REPO%%/*}|${REPO#*/}|latest|FisiLab-Foto-*-$ARCH.AppImage.zsync"
   # Extract-and-run: works without FUSE (containers, CI). The output embeds the static runtime,
   # so users don't need libfuse2 either. With zsyncmake on the host (CI installs the zsync
   # package) appimagetool also writes the .zsync, into its working directory, hence the cd.
@@ -175,9 +181,9 @@ if has appimage; then
 fi
 
 if [ -z "${CROSS_TARGET:-}" ]; then
-  "$STAGE/usr/bin/photocraft-cli" --version
+  "$STAGE/usr/bin/$SLUG-cli" --version
 elif [ -n "${EMULATOR:-}" ]; then
-  "$EMULATOR" "$STAGE/usr/bin/photocraft-cli" --version
+  "$EMULATOR" "$STAGE/usr/bin/$SLUG-cli" --version
 fi
 echo "==> done"
 ls -lh "$DIST"

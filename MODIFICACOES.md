@@ -96,6 +96,8 @@ original (MIT OR Apache-2.0); veja [NOTICE](NOTICE).
 - A pasta `.github/` (CI, publicação de versões e financiamento do projeto original) foi apagada,
   para que os fluxos do PhotoCraft não rodem neste fork.
 - O `README.md` foi reescrito em português; o original virou `README.upstream.md`.
+- O empacotamento Linux (AppImage e .deb) usa os novos nomes, ícones e identificadores
+  (`br.ufrgs.fisilab.foto`, `fisilab-foto`, `FisiLab-Foto-<versão>-x86_64.AppImage`).
 - O `NOTICE` ganhou um cabeçalho do Foto; o texto original segue completo abaixo dele.
 
 ## O que **não** mudou

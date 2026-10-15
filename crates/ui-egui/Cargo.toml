@@ -29,7 +29,7 @@ photocraft-paint = { workspace = true }
 photocraft-format = { workspace = true }
 # Decoding the brand mark's PNG (`brand.rs`); already linked through photocraft-io.
 photocraft-codecs = { workspace = true }
-# Suíte FisiLab: palette for the UFRGS themes, the CTA splash and the suite About window.
+# Suíte FisiLab: the CTA splash and the suite About window.
 fisilab-brand = { workspace = true }
 egui = { workspace = true }
 egui_extras = { version = "0.36", default-features = false, features = ["svg"] }

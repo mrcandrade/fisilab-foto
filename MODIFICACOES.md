@@ -32,14 +32,15 @@ original (MIT OR Apache-2.0); veja [NOTICE](NOTICE).
   `assets/app-icon/` (é MIT OR Apache-2.0 e é usado por testes e pelos pacotes de Linux/macOS).
 
 ### Tema de cores
-- Dois temas novos, **UFRGS Noite** (escuro, padrão) e **UFRGS Dia** (claro), feitos com a paleta da
-  Suíte FisiLab (`crates/fisilab-brand`: o marinho e o vermelho da chama do LARFIC, o creme da logo,
-  o azul do CTA e da UFRGS). Eles ficam em primeiro lugar na lista de temas e mantêm o mesmo leiaute
-  do tema padrão original (Pro Cinza médio): só as cores mudam.
-- UFRGS Noite é o tema padrão para o modo escuro e UFRGS Dia para o modo claro (preferências
-  `interface.theme`, `interface.darkTheme` e `interface.lightTheme`). Os demais temas do PhotoCraft
-  continuam disponíveis em *Janela › Tema* e em *Preferências › Interface*.
-- Testes de contraste foram acrescentados para os dois temas novos.
+- A paleta é a **original do PhotoCraft**: o tema padrão continua sendo o do upstream (Pro Cinza
+  médio, o escuro).
+- Duas opções de tema ganharam nome em português e vêm em primeiro lugar na lista: **Noite**
+  (o tema escuro padrão original, antes "Pro (Cinza médio)") e **Dia** (seu par claro, antes
+  "Pro (Claro)"). São os mesmos temas e as mesmas cores do upstream, só com novo nome; os demais
+  temas continuam em *Janela › Tema* e em *Preferências › Interface*. Os nomes `noite`/`night` e
+  `dia`/`day` também são aceitos onde se escreve o nome do tema.
+- O português do Brasil é escolhido apenas na primeira execução (sem preferências salvas), pelo
+  aplicativo; o padrão da biblioteca continua o do upstream.
 
 ### Tela de abertura e janela "Sobre"
 - Uma tela de abertura com a logo do CTA aparece nos primeiros segundos (um clique ou uma tecla a

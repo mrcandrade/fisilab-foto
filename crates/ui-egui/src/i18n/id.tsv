@@ -3126,8 +3126,8 @@ curves	Smooth	Haluskan
 
 # Suíte FisiLab (Foto): menu items added by the FisiLab — LARFIC/UFRGS rebranding. Their source
 # text is already Brazilian Portuguese, so every catalog shows it as is.
-	Tema UFRGS Noite	Tema UFRGS Noite
-	Tema UFRGS Dia	Tema UFRGS Dia
+	Noite	Noite
+	Dia	Dia
 	Site da Suíte FisiLab	Site da Suíte FisiLab
 	Manifesto pelas tecnologias livres	Manifesto pelas tecnologias livres
 	Projeto original (PhotoCraft)	Projeto original (PhotoCraft)

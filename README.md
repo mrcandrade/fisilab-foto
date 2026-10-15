@@ -47,7 +47,7 @@ programas livres para ensinar, pesquisar e criar na universidade. Ele é uma ver
 
 Baixe o instalador `FisiLab-Foto-Setup-<versão>.exe` no portal de downloads da Suíte FisiLab ou na
 página de [versões do Foto no GitHub](https://github.com/mrcandrade/fisilab-foto/releases) e execute-o.
-O Foto abre em português do Brasil, com o tema **UFRGS Noite** (o tema claro **UFRGS Dia** e os
+O Foto abre em português do Brasil, com a paleta original do PhotoCraft (tema **Noite**; o tema claro **Dia** e os
 demais temas estão em *Janela › Tema*).
 
 ### Compilar a partir do código

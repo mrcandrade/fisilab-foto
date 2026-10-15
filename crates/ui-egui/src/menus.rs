@@ -77,13 +77,10 @@ pub const UI_COMMANDS: &[(&str, &str, &[&str], Option<&str>)] = &[
     ("window.nextDocument", "Next Document", &[], Some("Ctrl+Tab")),
     ("window.previousDocument", "Previous Document", &[], Some("Ctrl+Shift+Tab")),
     ("window.theme.toggle", "Next Appearance Mode", &["Window"], None),
-    // Suíte FisiLab themes first (UFRGS Noite is the default).
-    ("window.theme.ufrgsNoite", "Tema UFRGS Noite", &["Window", "Theme"], None),
-    ("window.theme.ufrgsDia", "Tema UFRGS Dia", &["Window", "Theme"], None),
+    ("window.theme.proMedium", "Noite", &["Window", "Theme"], None),
+    ("window.theme.proLight", "Dia", &["Window", "Theme"], None),
     ("window.theme.pro", "Pro Theme", &["Window", "Theme"], None),
-    ("window.theme.proMedium", "Pro Medium Gray Theme", &["Window", "Theme"], None),
     ("window.theme.proLightGray", "Pro Light Gray Theme", &["Window", "Theme"], None),
-    ("window.theme.proLight", "Pro Light Theme", &["Window", "Theme"], None),
     ("window.theme.studio", "Studio Theme", &["Window", "Theme"], None),
     ("window.theme.studioLight", "Studio Light Theme", &["Window", "Theme"], None),
     ("window.theme.classic", "Classic Theme", &["Window", "Theme"], None),
@@ -383,8 +380,6 @@ pub(crate) fn invoke_unguarded(app: &mut PhotocraftApp, ctx: &egui::Context, id:
             crate::prefs_ui::sync_appearance(app, ctx);
             Ok(Value::Null)
         }
-        "window.theme.ufrgsNoite"
-        | "window.theme.ufrgsDia"
         | "window.theme.pro"
         | "window.theme.proMedium"
         | "window.theme.proLightGray"

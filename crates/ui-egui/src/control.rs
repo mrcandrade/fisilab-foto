@@ -631,7 +631,7 @@ fn dispatch(app: &mut PhotocraftApp, ctx: &egui::Context, req: &ControlRequest) 
 
                 let bridge_pro = matches!(
                     theme.unwrap_or(app.ui.theme),
-                    crate::theme::ThemeKind::UfrgsNoite | crate::theme::ThemeKind::UfrgsDia | crate::theme::ThemeKind::Pro | crate::theme::ThemeKind::ProMedium
+                    crate::theme::ThemeKind::Pro | crate::theme::ThemeKind::ProMedium
                 );
                 let legacy_update = crate::panel_docking::prepare_legacy_update(app, p, panels.as_ref(), dock_tabs.as_ref(), dock.as_ref(), bridge_pro)?;
 

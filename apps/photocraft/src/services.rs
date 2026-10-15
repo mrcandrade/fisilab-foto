@@ -667,8 +667,8 @@ mod tests {
             let mut session = photocraft_engine::Session::new();
             session.load_prefs_json(&text.unwrap()).unwrap();
             assert_eq!(session.prefs().interface.language, "pt-br");
-            // Only the language: the theme stays the default (UFRGS Noite).
-            assert_eq!(session.prefs().interface.dark_theme, photocraft_engine::prefs::DarkTheme::UfrgsNoite);
+            // Only the language: the theme stays the default (Noite).
+            assert_eq!(session.prefs().interface.dark_theme, photocraft_engine::prefs::DarkTheme::ProMedium);
         }
         for saved in ["auto", "en"] {
             std::fs::write(&file, format!(r#"{{"interface":{{"language":"{saved}"}}}}"#)).unwrap();

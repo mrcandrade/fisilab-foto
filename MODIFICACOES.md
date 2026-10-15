@@ -98,6 +98,7 @@ original (MIT OR Apache-2.0); veja [NOTICE](NOTICE).
 - O `README.md` foi reescrito em português; o original virou `README.upstream.md`.
 - O empacotamento Linux (AppImage e .deb) usa os novos nomes, ícones e identificadores
   (`br.ufrgs.fisilab.foto`, `fisilab-foto`, `FisiLab-Foto-<versão>-x86_64.AppImage`).
+- O empacotamento macOS (DMG universal) usa os novos nomes, ícone e identificadores.
 - O `NOTICE` ganhou um cabeçalho do Foto; o texto original segue completo abaixo dele.
 
 ## O que **não** mudou
